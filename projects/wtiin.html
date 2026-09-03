@@ -1,0 +1,833 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta name="description"
+          content="What time is it now!? - Unreal Engine 5.5 / C++ 3v3 Multiplayer Game">
+
+    <title>WTIIN | 김민서 Portfolio</title>
+
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+
+<body>
+
+    <!-- Header -->
+    <header class="site-header">
+        <div class="container nav-container">
+
+            <a href="../index.html" class="logo">
+                MINSEO<span>.</span>
+            </a>
+
+            <nav class="main-nav detail-nav">
+
+                <a href="../index.html#projects">
+                    Projects
+                </a>
+
+                <a href="https://github.com/mingso-bim"
+                   target="_blank"
+                   rel="noopener noreferrer">
+                    GitHub
+                </a>
+
+                <!-- 실제 GitLab 주소 연결 예정 -->
+                <a href="#" class="link-disabled">
+                    GitLab
+                </a>
+
+                <a href="../index.html">
+                    Home
+                </a>
+
+            </nav>
+
+        </div>
+    </header>
+
+
+    <main>
+
+        <!-- =====================================================
+             Project Hero
+        ====================================================== -->
+        <section class="project-detail-hero">
+            <div class="container">
+
+                <a href="../index.html#projects" class="back-link">
+                    ← Back to Projects
+                </a>
+
+
+                <div class="detail-title-area">
+
+                    <p class="eyebrow">
+                        TEAM PROJECT · CLIENT PROGRAMMER
+                    </p>
+
+                    <h1>
+                        What time is it now!?
+                    </h1>
+
+                    <!-- 프로젝트 이름 바로 아래 -->
+                    <div class="detail-tech">
+                        <span>Unreal Engine 5.5</span>
+                        <span>C++</span>
+                        <span>3v3 Multiplayer</span>
+                        <span>Dedicated Server</span>
+                    </div>
+
+                    <p class="detail-subtitle">
+                        시간 조작 능력을 활용해 전투하는 3vs3 멀티플레이 게임
+                    </p>
+
+                </div>
+
+
+                <div class="detail-hero-image">
+                    <img src="../assets/images/wtiin/wtiin-gameplay.png"
+                         alt="WTIIN 3대3 멀티플레이 전투 장면">
+                </div>
+
+
+                <dl class="detail-meta">
+
+                    <div>
+                        <dt>Period</dt>
+                        <dd>2025.02 — 2025.08</dd>
+                    </div>
+
+                    <div>
+                        <dt>Team</dt>
+                        <dd>4 Members</dd>
+                    </div>
+
+                    <div>
+                        <dt>Role</dt>
+                        <dd>Client Programmer</dd>
+                    </div>
+
+                    <div>
+                        <dt>Result</dt>
+                        <dd>캡스톤디자인 경진대회 장려상</dd>
+                    </div>
+
+                </dl>
+
+            </div>
+        </section>
+
+
+        <!-- =====================================================
+             Overview
+        ====================================================== -->
+        <section class="detail-section">
+            <div class="container">
+
+                <div class="detail-section-heading">
+                    <p class="eyebrow">
+                        MY CONTRIBUTIONS
+                    </p>
+
+                    <h2>
+                        주요 구현
+                    </h2>
+
+                    <p class="detail-section-description">
+                        클라이언트 프로그래머로 참여하여
+                        Gameplay, UI, Rendering을 중심으로 기능을 구현했습니다.
+                    </p>
+                </div>
+
+
+                <div class="overview-content">
+
+
+                    <div class="contribution-grid">
+
+                        <div>
+                            <span>01</span>
+
+                            <strong>
+                                Breakable Actor
+                            </strong>
+
+                            <p>
+                                Chaos 기반 파괴 및 시간 역행 엄폐물
+                            </p>
+                        </div>
+
+
+                        <div>
+                            <span>02</span>
+
+                            <strong>
+                                Battle Result
+                            </strong>
+
+                            <p>
+                                SceneCapture 기반 3D Character Preview
+                            </p>
+                        </div>
+
+
+                        <div>
+                            <span>03</span>
+
+                            <strong>
+                                Tutorial System
+                            </strong>
+
+                            <p>
+                                게임 이벤트 기반 단계 진행
+                            </p>
+                        </div>
+
+
+                        <div>
+                            <span>04</span>
+
+                            <strong>
+                                Projectile Base
+                            </strong>
+
+                            <p>
+                                공통 Projectile 로직 설계
+                            </p>
+                        </div>
+
+                    </div>
+
+
+                    <p class="detail-note">
+                        그 외 게임 내 UI, Skill Indicator, Audio,
+                        Practice Mode 등의 클라이언트 기능을 담당했습니다.
+                    </p>
+
+                </div>
+
+            </div>
+        </section>
+
+
+        <!-- =====================================================
+             01. Breakable Actor
+        ====================================================== -->
+        <section class="detail-section detail-section-dark">
+            <div class="container">
+
+                <div class="feature-heading">
+
+                    <p class="eyebrow">
+                        01 · GAMEPLAY / PHYSICS
+                    </p>
+
+                    <h2>
+                        Breakable Actor
+                    </h2>
+
+                    <p class="feature-description">
+                        공격에 의해 파괴되고, 시간 역행 스킬의 영향을 받으면
+                        흩어진 파편이 기존 위치로 돌아와 복원되는 엄폐물입니다.
+                    </p>
+
+                </div>
+
+
+                <div class="feature-flow">
+
+                    <div class="flow-item">
+                        <span>01</span>
+
+                        <strong>
+                            Capture
+                        </strong>
+
+                        <p>
+                            파괴 전 Fragment Transform 저장
+                        </p>
+                    </div>
+
+
+                    <div class="flow-arrow">
+                        →
+                    </div>
+
+
+                    <div class="flow-item">
+                        <span>02</span>
+
+                        <strong>
+                            Break
+                        </strong>
+
+                        <p>
+                            Chaos Geometry Collection 파괴
+                        </p>
+                    </div>
+
+
+                    <div class="flow-arrow">
+                        →
+                    </div>
+
+
+                    <div class="flow-item">
+                        <span>03</span>
+
+                        <strong>
+                            Restore
+                        </strong>
+
+                        <p>
+                            Lerp / Slerp 기반 Fragment 복원
+                        </p>
+                    </div>
+
+
+                    <div class="flow-arrow">
+                        →
+                    </div>
+
+
+                    <div class="flow-item">
+                        <span>04</span>
+
+                        <strong>
+                            Complete
+                        </strong>
+
+                        <p>
+                            정상 상태의 엄폐물로 복구
+                        </p>
+                    </div>
+
+                </div>
+
+
+                <div class="feature-text-grid">
+
+                    <article>
+
+                        <p class="feature-label">
+                            IMPLEMENTATION
+                        </p>
+
+                        <h3>
+                            Chaos의 물리 파편을
+                            직접 제어해 역행을 구현
+                        </h3>
+
+                        <p>
+                            Geometry Collection의 파편 상태를 저장하고,
+                            복원 시 각 Fragment의 현재 위치와 원래 위치를
+                            보간하여 역행 애니메이션을 구현했습니다.
+                        </p>
+
+                    </article>
+
+
+                    <article>
+
+                        <p class="feature-label">
+                            TECHNICAL DECISION
+                        </p>
+
+                        <h3>
+                            Cache 역재생 대신
+                            Runtime 제어 방식 선택
+                        </h3>
+
+                        <p>
+                            초기에는 파괴 장면을 Cache로 기록해 역재생하는
+                            방식도 검토했습니다. 모바일 환경에서의 메모리 부담과
+                            프로젝트 요구사항을 고려해 Chaos 물리 상태를
+                            직접 제어하는 방식으로 변경했습니다.
+                        </p>
+
+                    </article>
+
+                </div>
+
+
+                <!-- Network Troubleshooting -->
+                <div class="trouble-block">
+
+                    <p class="feature-label">
+                        PROBLEM SOLVING · MULTIPLAYER
+                    </p>
+
+                    <h3>
+                        Fragment 단위 충돌 판정의
+                        네트워크 비용 개선
+                    </h3>
+
+                    <p class="trouble-description">
+                        Fragment별 위치를 지속적으로 서버에서 판정하던 초기 방식에서
+                        네트워크 트래픽이 과도하게 증가하는 문제가 발생했습니다.
+                    </p>
+
+
+                    <div class="compare-grid">
+
+                        <div class="compare-card">
+
+                            <span>
+                                Before
+                            </span>
+
+                            <strong>
+                                Fragment 위치를 지속적으로
+                                서버에서 판정
+                            </strong>
+
+                            <p>
+                                파편 수가 증가하면서 서버 처리 및
+                                네트워크 트래픽이 과도하게 증가했습니다.
+                            </p>
+
+                        </div>
+
+
+                        <div class="compare-arrow">
+                            →
+                        </div>
+
+
+                        <div class="compare-card compare-card-accent">
+
+                            <span>
+                                After
+                            </span>
+
+                            <strong>
+                                물리 연출과 Gameplay 판정을
+                                분리
+                            </strong>
+
+                            <p>
+                                서버 및 기획 담당자와 논의하여
+                                개별 파편의 정밀 충돌 대신 비산 방향을 기준으로
+                                DamageVolume을 생성하도록 변경했습니다.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <p class="tradeoff-note">
+                        개별 Fragment의 정확한 충돌보다
+                        파편이 날아가는 방향에 대한 위험 영역이
+                        게임플레이상 중요하다고 판단하여 선택한 방식입니다.
+                    </p>
+
+                </div>
+
+            </div>
+        </section>
+
+
+        <!-- =====================================================
+             02. Battle Result
+        ====================================================== -->
+        <section class="detail-section">
+            <div class="container">
+
+                <div class="feature-heading">
+
+                    <p class="eyebrow">
+                        02 · RENDERING / UI
+                    </p>
+
+                    <h2>
+                        Battle Result & Character Preview
+                    </h2>
+
+                    <p class="feature-description">
+                        결과 화면에서 최대 6명의 캐릭터를
+                        3D Preview 형태로 표시하는 시스템을 구현했습니다.
+                    </p>
+
+                </div>
+
+
+                <div class="render-pipeline">
+
+                    <div>
+                        <span>3D Character</span>
+                    </div>
+
+                    <b>→</b>
+
+                    <div>
+                        <span>SceneCapture</span>
+                    </div>
+
+                    <b>→</b>
+
+                    <div>
+                        <span>RenderTarget</span>
+                    </div>
+
+                    <b>→</b>
+
+                    <div>
+                        <span>Dynamic Material</span>
+                    </div>
+
+                    <b>→</b>
+
+                    <div>
+                        <span>UMG Image</span>
+                    </div>
+
+                </div>
+
+
+                <div class="feature-text-grid">
+
+                    <article>
+
+                        <p class="feature-label">
+                            IMPLEMENTATION
+                        </p>
+
+                        <h3>
+                            3D 캐릭터를
+                            결과 UI에 렌더링
+                        </h3>
+
+                        <p>
+                            플레이어별 Character Preview Actor를 생성하고
+                            각각의 SceneCapture 결과를 RenderTarget에 출력한 뒤,
+                            Dynamic Material을 통해 UMG Image에 표시했습니다.
+                        </p>
+
+                    </article>
+
+
+                    <article>
+
+                        <p class="feature-label">
+                            PROBLEM SOLVING
+                        </p>
+
+                        <h3>
+                            SceneCapture의
+                            배경 분리 문제
+                        </h3>
+
+                        <p>
+                            단순 SceneCapture 설정만으로 원하는 캐릭터 배경
+                            처리가 되지 않아 Custom Stencil과
+                            Post Process 기반 렌더링 처리를 적용했습니다.
+                        </p>
+
+                    </article>
+
+                </div>
+
+            </div>
+        </section>
+
+
+        <!-- =====================================================
+             03. Tutorial
+        ====================================================== -->
+        <section class="detail-section detail-section-dark">
+            <div class="container">
+
+                <div class="feature-heading">
+
+                    <p class="eyebrow">
+                        03 · GAMEPLAY FLOW
+                    </p>
+
+                    <h2>
+                        Tutorial System
+                    </h2>
+
+                    <p class="feature-description">
+                        Trigger, Breakable Actor, NPC 등 게임에서 발생하는
+                        이벤트를 받아 Tutorial 상태가 순차적으로 변경되는
+                        구조로 구현했습니다.
+                    </p>
+
+                </div>
+
+
+                <div class="tutorial-flow">
+
+                    <span>Input Name</span>
+
+                    <b>→</b>
+
+                    <span>Move</span>
+
+                    <b>→</b>
+
+                    <span>Break BA</span>
+
+                    <b>→</b>
+
+                    <span>Attack NPC</span>
+
+                    <b>→</b>
+
+                    <span>Use Skill</span>
+
+                    <b>→</b>
+
+                    <span>Restore BA</span>
+
+                    <b>→</b>
+
+                    <span>End</span>
+
+                </div>
+
+
+                <div class="feature-text-grid">
+
+                    <article>
+
+                        <p class="feature-label">
+                            EVENT-DRIVEN
+                        </p>
+
+                        <h3>
+                            게임 이벤트와
+                            Tutorial 진행 상태를 연결
+                        </h3>
+
+                        <p>
+                            Trigger 진입, Breakable Actor 파괴 및 복원,
+                            Tutorial Enemy 사망 등의 이벤트를 받아
+                            다음 Tutorial 단계로 진행하도록 구성했습니다.
+                        </p>
+
+                    </article>
+
+
+                    <article>
+
+                        <p class="feature-label">
+                            DEBUGGING
+                        </p>
+
+                        <h3>
+                            Timer Callback과
+                            객체 생명주기 문제 대응
+                        </h3>
+
+                        <p>
+                            레벨 전환 과정에서 발생하던 크래시를 Debugger로
+                            추적하고, Timer Callback에서 TWeakObjectPtr로
+                            객체 유효성을 확인하며 TimerHandle을 관리하도록
+                            관련 코드를 보완했습니다.
+                        </p>
+
+                    </article>
+
+                </div>
+
+            </div>
+        </section>
+
+
+        <!-- =====================================================
+             04. Projectile
+        ====================================================== -->
+        <section class="detail-section">
+            <div class="container">
+
+                <div class="feature-heading">
+
+                    <p class="eyebrow">
+                        04 · C++ DESIGN
+                    </p>
+
+                    <h2>
+                        Projectile Base
+                    </h2>
+
+                    <p class="feature-description">
+                        여러 Projectile에서 반복되는 충돌, 데미지,
+                        사거리 및 서버 판정 등의 공통 로직을
+                        Base Class에 구현했습니다.
+                    </p>
+
+                </div>
+
+
+                <div class="base-grid">
+
+                    <div>
+                        <strong>Collision</strong>
+                    </div>
+
+                    <div>
+                        <strong>Team Check</strong>
+                    </div>
+
+                    <div>
+                        <strong>Damage</strong>
+                    </div>
+
+                    <div>
+                        <strong>Max Range</strong>
+                    </div>
+
+                    <div>
+                        <strong>Hit Handling</strong>
+                    </div>
+
+                    <div>
+                        <strong>Server Authority</strong>
+                    </div>
+
+                </div>
+
+
+                <p class="base-description">
+                    본인이 구현한 <strong>AWTProjectile</strong> Base를 기반으로
+                    다른 클라이언트 프로그래머가 6종의 파생 Projectile을
+                    구현했습니다. 공통 기능을 Base에 두어 반복 구현을 줄이고,
+                    각 Projectile은 고유 동작 구현에 집중할 수 있도록 구성했습니다.
+                </p>
+
+            </div>
+        </section>
+
+
+        <!-- =====================================================
+             Other Contributions
+        ====================================================== -->
+        <section class="detail-section detail-section-dark">
+            <div class="container">
+
+                <div class="feature-heading">
+
+                    <p class="eyebrow">
+                        ADDITIONAL WORK
+                    </p>
+
+                    <h2>
+                        Other Contributions
+                    </h2>
+
+                    <p class="feature-description">
+                        핵심 기능 외에도 게임을 완성하는 데 필요한
+                        UI, Audio, Practice Mode 등의
+                        클라이언트 기능을 담당했습니다.
+                    </p>
+
+                </div>
+
+
+                <div class="additional-grid">
+
+                    <article>
+
+                        <span>
+                            UI
+                        </span>
+
+                        <h3>
+                            In-game UI
+                        </h3>
+
+                        <p>
+                            게임 내 UI 및 Skill Indicator 구현
+                        </p>
+
+                    </article>
+
+
+                    <article>
+
+                        <span>
+                            AUDIO
+                        </span>
+
+                        <h3>
+                            Sound System
+                        </h3>
+
+                        <p>
+                            Level별 BGM 관리 및
+                            Local Player UI Sound 처리
+                        </p>
+
+                    </article>
+
+
+                    <article>
+
+                        <span>
+                            PRACTICE
+                        </span>
+
+                        <h3>
+                            Practice Mode
+                        </h3>
+
+                        <p>
+                            캐릭터 변경, Pawn Spawn / Possess 및
+                            연습용 Enemy 구성
+                        </p>
+
+                    </article>
+
+                </div>
+
+            </div>
+        </section>
+
+
+        <!-- =====================================================
+             Next Project
+        ====================================================== -->
+        <section class="next-project-section">
+            <div class="container">
+
+                <p class="eyebrow">
+                    NEXT PROJECT
+                </p>
+
+                <a href="stack-sell.html"
+                   class="next-project-link">
+                    <div>
+                        <span>02</span>
+                        <h2>Stack & Sell</h2>
+                    </div>
+
+                    <span>→</span>
+                </a>
+
+            </div>
+        </section>
+
+    </main>
+
+
+    <footer class="site-footer">
+        <div class="container footer-inner">
+
+            <span>
+                © 2026 김민서
+            </span>
+
+            <a href="../index.html">
+                Back to Home ↑
+            </a>
+
+        </div>
+    </footer>
+
+</body>
+</html>

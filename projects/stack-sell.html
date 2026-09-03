@@ -1,0 +1,805 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta
+        name="description"
+        content="Stack & Sell - Unity 6 / C# 3D Mobile Casual Game"
+    >
+
+    <title>Stack & Sell | 김민서 Portfolio</title>
+
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+
+<body>
+
+    <!-- Header -->
+    <header class="site-header">
+        <div class="container nav-container">
+
+            <a href="../index.html" class="logo">
+                MINSEO<span>.</span>
+            </a>
+
+            <nav class="main-nav detail-nav">
+
+                <a href="../index.html#projects">
+                    Projects
+                </a>
+
+                <a
+                    href="https://github.com/mingso-bim"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                >
+                    GitHub
+                </a>
+
+                <a href="../index.html">
+                    Home
+                </a>
+
+            </nav>
+
+        </div>
+    </header>
+
+
+    <main>
+
+        <!-- =====================================================
+             Project Hero
+        ====================================================== -->
+        <section class="project-detail-hero">
+            <div class="container">
+
+                <a href="../index.html#projects" class="back-link">
+                    ← Back to Projects
+                </a>
+
+
+                <div class="detail-title-area">
+
+                    <p class="eyebrow">
+                        PERSONAL PROJECT · MOBILE CASUAL
+                    </p>
+
+                    <h1>
+                        Stack & Sell
+                    </h1>
+
+
+                    <div class="detail-tech">
+                        <span>Unity 6</span>
+                        <span>C#</span>
+                        <span>URP</span>
+                        <span>Android</span>
+                    </div>
+
+
+                    <p class="detail-subtitle">
+                        아이템을 수집해 Stack하고 판매하여 Gold를 획득한 뒤,
+                        캐릭터의 능력치를 성장시키는 3D 모바일 캐주얼 게임
+                    </p>
+
+                </div>
+
+
+                <div class="detail-hero-image ss-hero-image">
+
+                    <img
+                        src="../assets/images/ss/ss-stack.png"
+                        alt="Stack & Sell에서 과일을 캐릭터 뒤에 쌓은 모습"
+                    >
+
+                </div>
+
+
+                <dl class="detail-meta">
+
+                    <div>
+                        <dt>Period</dt>
+                        <dd>2026.08.25 — 09.03</dd>
+                    </div>
+
+                    <div>
+                        <dt>Type</dt>
+                        <dd>Personal Project</dd>
+                    </div>
+
+                    <div>
+                        <dt>Platform</dt>
+                        <dd>Android</dd>
+                    </div>
+
+                    <div>
+                        <dt>Build / Test</dt>
+                        <dd>APK · Emulator</dd>
+                    </div>
+
+                </dl>
+
+
+                <div class="ss-repository-link">
+
+                    <a
+                        href="https://github.com/mingso-bim/StackSell"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        class="button button-secondary"
+                    >
+                        GitHub Repository ↗
+                    </a>
+
+                </div>
+
+            </div>
+        </section>
+
+
+        <!-- =====================================================
+             Gameplay Flow
+        ====================================================== -->
+        <section class="detail-section">
+            <div class="container">
+
+                <div class="feature-heading">
+
+                    <p class="eyebrow">
+                        CORE GAMEPLAY
+                    </p>
+
+                    <h2>
+                        Gameplay Flow
+                    </h2>
+
+                    <p class="feature-description">
+                        수집과 판매를 반복해 Gold를 획득하고,
+                        캐릭터의 Speed와 Capacity를 강화하는
+                        짧은 반복 플레이 구조로 구성했습니다.
+                    </p>
+
+                </div>
+
+
+                <div class="ss-game-flow">
+
+                    <div>
+                        <span>01</span>
+                        <strong>Move</strong>
+                        <p>Floating Joystick으로 이동</p>
+                    </div>
+
+                    <b>→</b>
+
+                    <div>
+                        <span>02</span>
+                        <strong>Collect</strong>
+                        <p>생성된 과일 수집</p>
+                    </div>
+
+                    <b>→</b>
+
+                    <div>
+                        <span>03</span>
+                        <strong>Stack</strong>
+                        <p>캐릭터 뒤에 순차 적재</p>
+                    </div>
+
+                    <b>→</b>
+
+                    <div>
+                        <span>04</span>
+                        <strong>Sell</strong>
+                        <p>판매 존에서 자동 판매</p>
+                    </div>
+
+                    <b>→</b>
+
+                    <div>
+                        <span>05</span>
+                        <strong>Upgrade</strong>
+                        <p>Speed / Capacity 성장</p>
+                    </div>
+
+                    <b>→</b>
+
+                    <div>
+                        <span>06</span>
+                        <strong>Clear</strong>
+                        <p>두 능력치 MAX 시 클리어</p>
+                    </div>
+
+                </div>
+
+            </div>
+        </section>
+
+
+        <!-- =====================================================
+             Mobile Input
+        ====================================================== -->
+        <section class="detail-section detail-section-dark">
+            <div class="container">
+
+                <div class="feature-heading">
+
+                    <p class="eyebrow">
+                        01 · MOBILE INPUT
+                    </p>
+
+                    <h2>
+                        Floating Joystick
+                    </h2>
+
+                    <p class="feature-description">
+                        화면을 터치한 위치에 조이스틱이 생성되고,
+                        드래그 방향을 이용해 캐릭터를 이동하도록 구현했습니다.
+                    </p>
+
+                </div>
+
+
+                <div class="ss-feature-layout">
+
+                    <div class="ss-feature-image">
+
+                        <img
+                            src="../assets/images/ss/ss-joystick.png"
+                            alt="Stack & Sell Floating Joystick"
+                        >
+
+                    </div>
+
+
+                    <div class="ss-feature-content">
+
+                        <p class="feature-label">
+                            IMPLEMENTATION
+                        </p>
+
+                        <h3>
+                            모바일 터치 입력과
+                            CharacterController 이동 연결
+                        </h3>
+
+                        <p>
+                            IPointerDownHandler, IDragHandler,
+                            IPointerUpHandler를 이용해 Floating Joystick을
+                            직접 구현했습니다.
+                        </p>
+
+                        <p>
+                            조이스틱 입력은 CharacterController 기반
+                            캐릭터 이동에 전달하며, 개발 중 Editor 테스트를 위해
+                            WASD 입력도 함께 사용할 수 있도록 구성했습니다.
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </div>
+        </section>
+
+
+        <!-- =====================================================
+             Collect / Stack / Sell
+        ====================================================== -->
+        <section class="detail-section">
+            <div class="container">
+
+                <div class="feature-heading">
+
+                    <p class="eyebrow">
+                        02 · GAMEPLAY
+                    </p>
+
+                    <h2>
+                        Collect · Stack · Sell
+                    </h2>
+
+                    <p class="feature-description">
+                        생성 존에서 아이템을 수집해 적재량 한도까지 쌓고,
+                        판매 존으로 운반하면 Stack의 아이템이
+                        하나씩 판매되도록 구현했습니다.
+                    </p>
+
+                </div>
+
+
+                <div class="ss-image-pair">
+
+                    <figure>
+
+                        <img
+                            src="../assets/images/ss/ss-stack.png"
+                            alt="캐릭터 뒤에 과일이 쌓인 모습"
+                        >
+
+                        <figcaption>
+                            Collect & Stack
+                        </figcaption>
+
+                    </figure>
+
+
+                    <figure>
+
+                        <img
+                            src="../assets/images/ss/ss-sell.png"
+                            alt="판매 존에서 아이템을 판매하는 모습"
+                        >
+
+                        <figcaption>
+                            Sell
+                        </figcaption>
+
+                    </figure>
+
+                </div>
+
+
+                <div class="feature-text-grid ss-feature-cards">
+
+                    <article>
+
+                        <p class="feature-label">
+                            STACK
+                        </p>
+
+                        <h3>
+                            적재량에 따라
+                            아이템 순차 배치
+                        </h3>
+
+                        <p>
+                            수집한 과일을 Stack Root 아래에서 관리하고,
+                            일정 간격으로 배치해 캐릭터 뒤에 쌓이도록 구현했습니다.
+                            Capacity에 따라 최대 수집 개수를 제한합니다.
+                        </p>
+
+                    </article>
+
+
+                    <article>
+
+                        <p class="feature-label">
+                            SELL
+                        </p>
+
+                        <h3>
+                            Stack 상단부터
+                            순차적으로 판매
+                        </h3>
+
+                        <p>
+                            판매 존에 머무르면 Stack 상단의 아이템부터
+                            하나씩 판매대로 이동한 뒤 제거되고,
+                            판매된 수량만큼 Gold가 증가합니다.
+                        </p>
+
+                    </article>
+
+                </div>
+
+            </div>
+        </section>
+
+
+        <!-- =====================================================
+             Upgrade / Data
+        ====================================================== -->
+        <section class="detail-section detail-section-dark">
+            <div class="container">
+
+                <div class="feature-heading">
+
+                    <p class="eyebrow">
+                        03 · DATA / PROGRESSION
+                    </p>
+
+                    <h2>
+                        Upgrade & Data
+                    </h2>
+
+                    <p class="feature-description">
+                        판매로 획득한 Gold를 사용해 이동 속도와
+                        최대 적재량을 강화하며, 밸런스 데이터는
+                        ScriptableObject로 분리했습니다.
+                    </p>
+
+                </div>
+
+
+                <div class="ss-feature-layout ss-feature-layout-reverse">
+
+                    <div class="ss-feature-image">
+
+                        <img
+                            src="../assets/images/ss/ss-gameplay.png"
+                            alt="Stack & Sell 전체 게임 화면과 Upgrade UI"
+                        >
+
+                    </div>
+
+
+                    <div class="ss-feature-content">
+
+                        <p class="feature-label">
+                            SCRIPTABLEOBJECT
+                        </p>
+
+                        <h3>
+                            게임 로직과
+                            밸런스 데이터 분리
+                        </h3>
+
+                        <p>
+                            판매 가격, 기본 이동 속도, 기본 Capacity,
+                            Upgrade 비용과 증가량, 최대 Upgrade 횟수 등을
+                            ScriptableObject로 관리했습니다.
+                        </p>
+
+                        <p>
+                            수치 조정을 위해 게임 로직 코드를 직접 수정하지 않아도
+                            되도록 데이터와 로직의 책임을 분리했습니다.
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </div>
+        </section>
+
+
+        <!-- =====================================================
+             Save / Load
+        ====================================================== -->
+        <section class="detail-section">
+            <div class="container">
+
+                <div class="feature-heading">
+
+                    <p class="eyebrow">
+                        04 · SAVE / PROGRESS
+                    </p>
+
+                    <h2>
+                        Save & Load
+                    </h2>
+
+                    <p class="feature-description">
+                        앱을 종료한 뒤 다시 실행해도 Gold와 성장 상태가
+                        유지되도록 로컬 저장 기능을 구현했습니다.
+                    </p>
+
+                </div>
+
+
+                <div class="ss-save-grid">
+
+                    <article>
+
+                        <span>01</span>
+
+                        <h3>
+                            Save Data
+                        </h3>
+
+                        <p>
+                            Gold, Speed, Capacity,
+                            Upgrade 횟수 및 게임 클리어 상태를
+                            저장 데이터로 관리합니다.
+                        </p>
+
+                    </article>
+
+
+                    <article>
+
+                        <span>02</span>
+
+                        <h3>
+                            JSON
+                        </h3>
+
+                        <p>
+                            JsonUtility를 이용해
+                            Save Data를 JSON 형태로 직렬화합니다.
+                        </p>
+
+                    </article>
+
+
+                    <article>
+
+                        <span>03</span>
+
+                        <h3>
+                            Persistent Path
+                        </h3>
+
+                        <p>
+                            Application.persistentDataPath를 이용해
+                            기기 로컬 저장 경로에 데이터를 기록합니다.
+                        </p>
+
+                    </article>
+
+
+                    <article>
+
+                        <span>04</span>
+
+                        <h3>
+                            Auto Load
+                        </h3>
+
+                        <p>
+                            Scene 시작 시 저장 데이터를 불러와
+                            이전 진행 상태를 복원합니다.
+                        </p>
+
+                    </article>
+
+                </div>
+
+            </div>
+        </section>
+
+
+        <!-- =====================================================
+             UX / Polish
+        ====================================================== -->
+        <section class="detail-section detail-section-dark">
+            <div class="container">
+
+                <div class="feature-heading">
+
+                    <p class="eyebrow">
+                        UX / POLISH
+                    </p>
+
+                    <h2>
+                        Gameplay Feedback
+                    </h2>
+
+                    <p class="feature-description">
+                        핵심 플레이 루프를 구현한 뒤 실제 플레이에서
+                        필요한 정보 전달과 피드백을 보완했습니다.
+                    </p>
+
+                </div>
+
+
+                <div class="ss-polish-grid">
+
+                    <article>
+
+                        <span>
+                            OUTLINE
+                        </span>
+
+                        <h3>
+                            Interactable Outline
+                        </h3>
+
+                        <p>
+                            맵 배치 후 상호작용 가능한 오브젝트의 식별성이
+                            떨어지는 것을 확인하고, URP Outline을
+                            상시 표시하도록 적용했습니다.
+                        </p>
+
+                    </article>
+
+
+                    <article>
+
+                        <span>
+                            TUTORIAL
+                        </span>
+
+                        <h3>
+                            First Launch Tutorial
+                        </h3>
+
+                        <p>
+                            최초 실행에서만 조작 방법을 보여주는
+                            전체화면 Tutorial Overlay를 구현했습니다.
+                        </p>
+
+                    </article>
+
+
+                    <article>
+
+                        <span>
+                            AUDIO
+                        </span>
+
+                        <h3>
+                            BGM / SFX
+                        </h3>
+
+                        <p>
+                            수집, 판매, Upgrade 상황에 효과음을 적용하고,
+                            반복 재생되는 BGM을 추가했습니다.
+                        </p>
+
+                    </article>
+
+
+                    <article>
+
+                        <span>
+                            CLEAR
+                        </span>
+
+                        <h3>
+                            Game Clear
+                        </h3>
+
+                        <p>
+                            Speed와 Capacity가 모두 최대 단계에 도달하면
+                            Game Clear UI를 표시하도록 구성했습니다.
+                        </p>
+
+                    </article>
+
+                </div>
+
+
+                <div class="ss-clear-image">
+
+                    <img
+                        src="../assets/images/ss/ss-clear.png"
+                        alt="Stack & Sell 게임 클리어 화면"
+                    >
+
+                </div>
+
+            </div>
+        </section>
+
+
+        <!-- =====================================================
+             Development
+        ====================================================== -->
+        <section class="detail-section">
+            <div class="container">
+
+                <div class="feature-heading">
+
+                    <p class="eyebrow">
+                        DEVELOPMENT
+                    </p>
+
+                    <h2>
+                        Unity / C#으로의 확장
+                    </h2>
+
+                    <p class="feature-description">
+                        Unreal Engine / C++ 프로젝트 경험을 기반으로
+                        Unity와 C#을 새롭게 학습하며 약 10일간
+                        모바일 3D 캐주얼 게임의 한 사이클을 완성했습니다.
+                    </p>
+
+                </div>
+
+
+                <div class="ss-development-grid">
+
+                    <article>
+
+                        <span>
+                            ENGINE
+                        </span>
+
+                        <strong>
+                            Unity 6000.5.0f1
+                        </strong>
+
+                    </article>
+
+
+                    <article>
+
+                        <span>
+                            LANGUAGE
+                        </span>
+
+                        <strong>
+                            C#
+                        </strong>
+
+                    </article>
+
+
+                    <article>
+
+                        <span>
+                            TARGET
+                        </span>
+
+                        <strong>
+                            Android
+                        </strong>
+
+                    </article>
+
+
+                    <article>
+
+                        <span>
+                            RESULT
+                        </span>
+
+                        <strong>
+                            APK Build / Emulator Test
+                        </strong>
+
+                    </article>
+
+                </div>
+
+
+                <p class="ss-development-note">
+                    개발 과정에서 Claude Code를 코드 분석,
+                    구현 보조 및 리팩터링 검토 도구로 활용했습니다.
+                </p>
+
+            </div>
+        </section>
+
+
+        <!-- =====================================================
+             Previous
+        ====================================================== -->
+        <section class="next-project-section">
+            <div class="container">
+
+                <p class="eyebrow">
+                    PREVIOUS PROJECT
+                </p>
+
+                <a
+                    href="wtiin.html"
+                    class="next-project-link"
+                >
+
+                    <div>
+                        <span>01</span>
+                        <h2>What time is it now!?</h2>
+                    </div>
+
+                    <span>→</span>
+
+                </a>
+
+            </div>
+        </section>
+
+    </main>
+
+
+    <footer class="site-footer">
+        <div class="container footer-inner">
+
+            <span>
+                © 2026 김민서
+            </span>
+
+            <a href="../index.html">
+                Back to Home ↑
+            </a>
+
+        </div>
+    </footer>
+
+</body>
+</html>
