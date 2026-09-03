@@ -1399,6 +1399,45 @@ button {
     font-size: 0.87rem;
 }
 
+/* =========================================================
+   Character Preview Result Image
+========================================================= */
+
+.feature-result-image {
+    max-width: 1000px;
+    margin-bottom: 55px;
+    overflow: hidden;
+    border: 1px solid var(--line);
+    border-radius: 16px;
+    background: var(--card);
+}
+
+
+    .feature-result-image img {
+        display: block;
+        width: 100%;
+        aspect-ratio: 16 / 9;
+        object-fit: cover;
+    }
+
+
+    .feature-result-image p {
+        margin: 0;
+        padding: 13px 16px;
+        border-top: 1px solid var(--line);
+        color: var(--text-dim);
+        font-size: 0.76rem;
+    }
+
+
+/* =========================================================
+   Character Preview Pipeline
+========================================================= */
+
+.render-pipeline {
+    ...
+}
+
 
 /* =========================================================
    Character Preview Pipeline
