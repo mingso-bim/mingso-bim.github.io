@@ -1,0 +1,750 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta name="description"
+          content="직무 관련 기술 경험 - C++ 네트워크 게임 프로그래밍, 게임 그래픽스 및 셰이더">
+
+    <title>Technical Experience | 김민서 Portfolio</title>
+
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+
+<body>
+
+    <!-- Header -->
+    <header class="site-header">
+        <div class="container nav-container">
+
+            <a href="../index.html" class="logo">
+                MINSEO<span>.</span>
+            </a>
+
+            <button class="mobile-menu-button"
+                    type="button"
+                    aria-label="메뉴 열기"
+                    aria-expanded="false">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+
+            <nav class="main-nav detail-nav">
+
+                <a href="../index.html#projects">
+                    Projects
+                </a>
+
+                <a href="#network">
+                    Network
+                </a>
+
+                <a href="#graphics">
+                    Graphics
+                </a>
+
+                <a href="https://github.com/mingso-bim"
+                   target="_blank"
+                   rel="noopener noreferrer">
+                    GitHub
+                </a>
+
+                <a href="../index.html">
+                    Home
+                </a>
+
+            </nav>
+
+        </div>
+    </header>
+
+
+    <main>
+
+        <!-- =====================================================
+             Hero
+        ====================================================== -->
+        <section class="project-detail-hero">
+            <div class="container">
+
+                <a href="../index.html#experience" class="back-link">
+                    ← Back to Home
+                </a>
+
+
+                <div class="detail-title-area">
+
+                    <p class="eyebrow">
+                        TECHNICAL EXPERIENCE
+                    </p>
+
+                    <h1>
+                        직무 관련 기술 경험
+                    </h1>
+
+                    <div class="detail-tech">
+                        <span>C++</span>
+                        <span>WinSock / TCP</span>
+                        <span>OpenGL 3.3 / GLSL</span>
+                        <span>DirectX 12</span>
+                    </div>
+
+                    <p class="detail-subtitle">
+                        수업 프로젝트에서 경험한 네트워크 게임 프로그래밍과
+                        게임 그래픽스·셰이더 프로그래밍
+                    </p>
+
+                </div>
+
+            </div>
+        </section>
+
+
+        <!-- =====================================================
+             01. Network Programming
+        ====================================================== -->
+        <section id="network" class="detail-section experience-anchor">
+            <div class="container">
+
+                <div class="feature-heading">
+
+                    <p class="eyebrow">
+                        01 · NETWORK PROGRAMMING
+                    </p>
+
+                    <h2>
+                        20 Minutes Till Dawn 멀티플레이 전환
+                    </h2>
+
+                    <p class="feature-description">
+                        싱글플레이 게임을 서버·클라이언트 기반 멀티플레이 구조로
+                        전환한 프로토타입입니다. 전체 기능을 완성한 온라인 게임이 아니라,
+                        일부 기능까지 구현한 미완성 프로토타입입니다.
+                    </p>
+
+                </div>
+
+
+                <dl class="detail-meta">
+
+                    <div>
+                        <dt>Course</dt>
+                        <dd>2024년 2학기 네트워크게임프로그래밍</dd>
+                    </div>
+
+                    <div>
+                        <dt>Team</dt>
+                        <dd>3 Members</dd>
+                    </div>
+
+                    <div>
+                        <dt>Stack</dt>
+                        <dd>C++ / WinSock / TCP</dd>
+                    </div>
+
+                    <div>
+                        <dt>Scope</dt>
+                        <dd>Prototype (부분 구현)</dd>
+                    </div>
+
+                </dl>
+
+
+                <div class="additional-grid">
+
+                    <article>
+
+                        <span>
+                            PACKET
+                        </span>
+
+                        <h3>
+                            패킷 설계와 송수신
+                        </h3>
+
+                        <p>
+                            패킷 구조체와 패킷 타입을 구성하고 송수신 처리를
+                            구현했습니다. 클라이언트 코드를 통합하는 과정에서
+                            패킷 구조를 수정하며 통합 테스트를 진행했습니다.
+                        </p>
+
+                    </article>
+
+
+                    <article>
+
+                        <span>
+                            THREAD
+                        </span>
+
+                        <h3>
+                            통신 스레드 분리
+                        </h3>
+
+                        <p>
+                            NetworkThread를 구현해 서버와의 통신을 게임 로직
+                            스레드와 분리했습니다.
+                        </p>
+
+                    </article>
+
+
+                    <article>
+
+                        <span>
+                            SYNC
+                        </span>
+
+                        <h3>
+                            객체 식별과 동기화
+                        </h3>
+
+                        <p>
+                            서버 ID와 클라이언트 객체를 매핑해
+                            플레이어와 투사체를 동기화했습니다.
+                        </p>
+
+                    </article>
+
+                </div>
+
+
+                <div class="feature-text-grid sub-block">
+
+                    <article>
+
+                        <p class="feature-label">
+                            MY ROLE
+                        </p>
+
+                        <h3>
+                            본인 담당
+                        </h3>
+
+                        <ul class="feature-list">
+                            <li>전체 네트워크 흐름도 작성</li>
+                            <li>NetworkThread 구현</li>
+                            <li>패킷 구조체와 패킷 타입 구성</li>
+                            <li>패킷 송수신 처리</li>
+                            <li>서버 ID와 클라이언트 객체 매핑</li>
+                            <li>클라이언트 코드 통합</li>
+                            <li>통합 테스트와 버그 수정</li>
+                        </ul>
+
+                    </article>
+
+
+                    <article>
+
+                        <p class="feature-label">
+                            IMPLEMENTED
+                        </p>
+
+                        <h3>
+                            구현 완료 범위
+                        </h3>
+
+                        <ul class="feature-list">
+                            <li>서버 접속</li>
+                            <li>플레이어 이름 및 ID 처리</li>
+                            <li>플레이어 동기화</li>
+                            <li>투사체 동기화</li>
+                            <li>서버 통신 스레드와 게임 스레드 분리</li>
+                            <li>매칭 처리</li>
+                        </ul>
+
+                    </article>
+
+                </div>
+
+
+                <div class="scope-note">
+
+                    <p class="feature-label">
+                        미완성 범위
+                    </p>
+
+                    <p>
+                        적·아이템·레벨 동기화, 게임 로직의 완전한 서버 권한 구조,
+                        관전·부활 시스템과 기타 부가 기능은 구현하지 못했습니다.
+                    </p>
+
+                </div>
+
+            </div>
+        </section>
+
+
+        <!-- =====================================================
+             02. Graphics & Shader Programming
+        ====================================================== -->
+        <section id="graphics" class="detail-section detail-section-dark experience-anchor">
+            <div class="container">
+
+                <div class="feature-heading">
+
+                    <p class="eyebrow">
+                        02 · GRAPHICS &amp; SHADER PROGRAMMING
+                    </p>
+
+                    <h2>
+                        OpenGL 기반 파티클 렌더링 및 Bloom 후처리
+                    </h2>
+
+                    <p class="feature-description">
+                        C++에서 HDR Framebuffer와 다중 렌더 타깃을 구성하고,
+                        밝기 추출 결과에 Ping-Pong 방식의 가로·세로 Blur를 적용한 뒤
+                        원본 화면과 합성하는 Bloom 후처리 파이프라인을 구현했습니다.
+                    </p>
+
+                </div>
+
+
+                <div class="detail-tech">
+                    <span>C++</span>
+                    <span>OpenGL 3.3</span>
+                    <span>GLSL</span>
+                    <span>Vertex / Fragment Shader</span>
+                </div>
+
+
+                <div class="render-pipeline render-pipeline-6 sub-block">
+
+                    <div>
+                        <span>C++ 파티클 데이터 구성</span>
+                    </div>
+
+                    <b>→</b>
+
+                    <div>
+                        <span>Vertex Shader 이동 계산</span>
+                    </div>
+
+                    <b>→</b>
+
+                    <div>
+                        <span>Fragment Shader 색상·밝기 추출</span>
+                    </div>
+
+                    <b>→</b>
+
+                    <div>
+                        <span>HDR FBO</span>
+                    </div>
+
+                    <b>→</b>
+
+                    <div>
+                        <span>Ping-Pong Blur</span>
+                    </div>
+
+                    <b>→</b>
+
+                    <div>
+                        <span>최종 합성</span>
+                    </div>
+
+                </div>
+
+
+                <div class="step-list">
+
+                    <!-- Step 1 -->
+                    <article class="step-card">
+
+                        <span>01</span>
+
+                        <h3>
+                            C++에서 파티클 데이터와 렌더링 리소스 구성
+                        </h3>
+
+                        <p>
+                            CreateParticles(5000)로 파티클마다 위치, 값, 색상,
+                            시작 시간, 속도, 수명, 질량, 주기, UV를 정점 데이터로
+                            구성해 VBO에 저장하고, Vertex Attribute로 셰이더에
+                            전달했습니다.
+                        </p>
+
+                        <p>
+                            CreateFBOs()에서는 GL_RGBA16F 렌더 타깃 두 개를
+                            GL_COLOR_ATTACHMENT0, GL_COLOR_ATTACHMENT1에 연결한
+                            HDR Framebuffer와, Blur에 사용할 Ping-Pong FBO·Texture
+                            2개를 구성하고 각 Framebuffer의 상태를 검사했습니다.
+                        </p>
+
+                    </article>
+
+
+                    <!-- Step 2 -->
+                    <article class="step-card">
+
+                        <span>02</span>
+
+                        <h3>
+                            Vertex Shader에서 시간과 중력을 이용한 이동 계산
+                        </h3>
+
+                        <p>
+                            Particle.vs에는 fountain, sinParticle, circleParticle,
+                            waterParticle 함수가 있으며, 실행 결과에 사용한 main()은
+                            circleParticle()만 호출합니다. circleParticle()은 a_Value로
+                            원 위의 시작 위치를 정하고, 시작 시간 이후 수명 주기로
+                            반복되는 시간 t에 중력 가속도를 적용해 위치를 계산합니다.
+                            수명이 지날수록 알파가 감소합니다.
+                        </p>
+
+                        <p>
+                            초기 속도와 외력(u_Force)을 사용하는 계산은 fountain()에
+                            구현되어 있으며, 실행 결과에는 사용하지 않았습니다.
+                        </p>
+
+                        <details class="code-details">
+                            <summary>코드 보기</summary>
+
+                            <p class="code-caption">
+                                실제 코드 일부 발췌 · Particle.vs — circleParticle() 본문
+                            </p>
+
+<pre><code>vec4 newPosition = vec4(a_Position, 1);
+// ...
+float newAlpha = 1;
+float lifeTime = a_LifeTime;
+float newTime = u_Time - a_sTime;
+
+if (newTime &gt; 0)
+{
+    float value = a_Value * c_PI * 2;
+    float x = sin(value);
+    float y = cos(value);
+    float t = fract(newTime/lifeTime) * lifeTime;
+    float tt = t*t;
+    float newX = x + 0.5 * c_G.x * tt;
+    float newY = y + 0.5 * c_G.y * tt;
+    newPosition.xy += vec2(newX, newY);
+    newAlpha = 1-t/lifeTime;
+}
+// ...
+v_Color = vec4(a_Color.rgb*3*newAlpha, newAlpha);</code></pre>
+                        </details>
+
+                    </article>
+
+
+                    <!-- Step 3 -->
+                    <article class="step-card">
+
+                        <span>03</span>
+
+                        <h3>
+                            Fragment Shader에서 일반 색상과 밝기 영역 분리
+                        </h3>
+
+                        <p>
+                            파티클 Texture와 정점 색상을 합성한 뒤 휘도를 계산하고,
+                            일반 색상과 Bloom에 사용할 밝은 영역을 두 개의
+                            출력(MRT)으로 동시에 기록했습니다.
+                        </p>
+
+                        <details class="code-details">
+                            <summary>코드 보기</summary>
+
+                            <p class="code-caption">
+                                실제 코드 일부 발췌 · Particle.fs — main()
+                            </p>
+
+<pre><code>layout(location=0) out vec4 FragColor;
+layout(location=1) out vec4 FragColor1;
+// ...
+void main()
+{
+    // ...
+    vec4 result = texture(u_Texture, v_Tex)*v_Color *2;
+    float brightness = dot(result.rgb, vec3(0.2126, 0.7152, 0.0722));
+    FragColor = result;
+
+    if(brightness &gt; 1.0)
+        FragColor1 = result - vec4(0);
+    else
+        FragColor1 = vec4(0);
+}</code></pre>
+                        </details>
+
+                    </article>
+
+
+                    <!-- Step 4 -->
+                    <article class="step-card">
+
+                        <span>04</span>
+
+                        <h3>
+                            HDR FBO와 Ping-Pong 방식의 가로·세로 Blur
+                        </h3>
+
+                        <p>
+                            DrawBloomParticle()에서 파티클을 HDR FBO에 렌더링한 뒤,
+                            밝기 Texture를 두 Ping-Pong FBO에 번갈아 그리며
+                            가로·세로 Gaussian Blur를 반복 적용했습니다.
+                            Texture.fs는 u_Method 값으로 기본 출력, 가로 Blur,
+                            세로 Blur, 합성 단계를 선택합니다.
+                        </p>
+
+                        <details class="code-details">
+                            <summary>코드 보기</summary>
+
+                            <p class="code-caption">
+                                실제 코드 일부 발췌 · Renderer.cpp — DrawBloomParticle()
+                            </p>
+
+<pre><code>// 1. Render to HDRFBO0 (rt: HDRRTO_0, HDRRTO_1)
+glBindFramebuffer(GL_FRAMEBUFFER, m_HDRFBO0);
+glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+glViewport(0, 0, 512, 512);
+DrawParticle();
+
+// 2. blur
+glBindFramebuffer(GL_FRAMEBUFFER, m_PingpongFBO[0]);    // render to pingpongTexture[0]
+DrawTexture(0, 0, 1, 1, m_HDRRTO_1, 0, 1);
+for (int i = 0; i &lt; 20; i++)
+{
+    glBindFramebuffer(GL_FRAMEBUFFER, m_PingpongFBO[1]);
+    DrawTexture(0, 0, 1, 1, m_PingpongTexture[0], 0, 2);
+    glBindFramebuffer(GL_FRAMEBUFFER, m_PingpongFBO[0]);
+    DrawTexture(0, 0, 1, 1, m_PingpongTexture[1], 0, 1);
+}
+// ...
+// bloom
+DrawTexture(0, 0, 1, 1, m_HDRRTO_0, m_PingpongTexture[0], 3);</code></pre>
+
+                            <p class="code-caption">
+                                실제 코드 일부 발췌 · Texture.fs — BlurH()
+                            </p>
+
+<pre><code>const float weight[5] = float[] (0.227027, 0.1945946, 0.1216216, 0.054054, 0.016216);
+// ...
+vec4 BlurH()
+{
+    vec2 tex_offset = 1.0 / textureSize(u_TexID, 0); // gets size of single texel
+    vec3 result = texture(u_TexID, v_Tex).rgb * weight[0]; // current fragment's contribution
+
+    for(int i = 1; i &lt; 5; ++i)
+    {
+        result += texture(u_TexID, v_Tex + vec2(tex_offset.x * i, 0.0)).rgb * weight[i];
+        result += texture(u_TexID, v_Tex - vec2(tex_offset.x * i, 0.0)).rgb * weight[i];
+    }
+
+    return vec4(result, 1.0);
+}</code></pre>
+                        </details>
+
+                    </article>
+
+
+                    <!-- Step 5 -->
+                    <article class="step-card">
+
+                        <span>05</span>
+
+                        <h3>
+                            원본 장면과 Blur 결과 합성
+                        </h3>
+
+                        <p>
+                            원본 HDR Texture에 Blur 결과를 더한 뒤 Tone Mapping과
+                            Gamma Correction을 적용해 최종 화면을 출력했습니다.
+                        </p>
+
+                        <details class="code-details">
+                            <summary>코드 보기</summary>
+
+                            <p class="code-caption">
+                                실제 코드 일부 발췌 · Texture.fs — Merge()
+                            </p>
+
+<pre><code>vec4 Merge()
+{
+    const float gamma = 2.2;
+    vec3 hdrColor = texture(u_TexID, vec2(v_Tex.x, 1-v_Tex.y)).rgb;
+    vec3 bloomColor = texture(u_TexID1, v_Tex).rgb;
+    hdrColor += bloomColor;
+
+    // tone mapping
+    vec3 result = vec3(1.0) - exp(-hdrColor * 2.2);
+
+    // also gamma correct while we're at it
+    result = pow(result, vec3(1.0 / gamma));
+    return vec4(result, 1.0);
+}</code></pre>
+                        </details>
+
+                    </article>
+
+                </div>
+
+
+                <!-- Result -->
+                <div class="sub-block">
+
+                    <p class="feature-label">
+                        06 · RESULT
+                    </p>
+
+                    <h3>
+                        실행 결과
+                    </h3>
+
+                    <div class="video-compare">
+
+                        <figure class="video-figure">
+                            <video src="../assets/videos/shader-bloom-off.mp4"
+                                   poster="../assets/images/shader-bloom-off.jpg"
+                                   autoplay
+                                   muted
+                                   loop
+                                   playsinline
+                                   preload="metadata"
+                                   aria-label="Bloom 미적용 파티클 실행 영상"></video>
+                            <figcaption class="video-label">Bloom 미적용</figcaption>
+                        </figure>
+
+                        <figure class="video-figure">
+                            <video src="../assets/videos/shader-bloom-on.mp4"
+                                   poster="../assets/images/shader-bloom-on.jpg"
+                                   autoplay
+                                   muted
+                                   loop
+                                   playsinline
+                                   preload="metadata"
+                                   aria-label="Bloom 적용 파티클 실행 영상"></video>
+                            <figcaption class="video-label">Bloom 적용</figcaption>
+                        </figure>
+
+                    </div>
+
+                    <p class="video-caption">
+                        파티클 렌더링 및 Bloom 후처리 적용 전·후
+                    </p>
+
+                </div>
+
+
+                <!-- Supplementary: Flag -->
+                <div class="sub-block">
+
+                    <p class="feature-label">
+                        07 · SUPPLEMENTARY
+                    </p>
+
+                    <h3>
+                        Vertex Shader 정점 변형
+                    </h3>
+
+                    <p>
+                        GridMesh.vs의 Flag()에서 정점의 x 위치와 시간(u_Time)을
+                        sin 함수에 넣어 y 방향 오프셋을 계산하고, 깃발이
+                        흔들리는 형태로 정점을 변형했습니다. 명암(shading)도
+                        sin 함수를 이용해 시간에 따라 변화시켰습니다.
+                    </p>
+
+                    <figure class="video-figure video-single">
+                        <video src="../assets/videos/shader-flag.mp4"
+                               poster="../assets/images/shader-flag.jpg"
+                               autoplay
+                               muted
+                               loop
+                               playsinline
+                               preload="metadata"
+                               aria-label="Vertex Shader 깃발 정점 변형 실행 영상"></video>
+                        <figcaption class="video-label">Vertex Shader 정점 변형</figcaption>
+                    </figure>
+
+                    <p class="video-caption">
+                        시간과 sin 함수를 이용한 Vertex Shader 정점 변형
+                    </p>
+
+                    <div class="scope-note">
+
+                        <p class="feature-label">
+                            그 외 학습 범위
+                        </p>
+
+                        <p>
+                            Fragment Shader 실습에서 UV 왜곡, 원형 파동,
+                            Texture 좌표 조작, 반복 및 분할을 다뤘습니다.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <!-- DirectX 12 -->
+                <div class="trouble-block">
+
+                    <p class="feature-label">
+                        DIRECTX 12 · 3D게임프로그래밍 수업
+                    </p>
+
+                    <h3>
+                        DirectX 12 기반 탱크 전투 게임
+                    </h3>
+
+                    <p class="trouble-description">
+                        3D게임프로그래밍 수업 프로젝트로 DirectX 12 기반 탱크 전투
+                        게임을 제작하며 렌더링 파이프라인의 동작 과정을 학습했습니다.
+                        리소스와 렌더링 단계가 최종 화면 출력으로 이어지는 흐름을
+                        이해할 수 있었습니다.
+                    </p>
+
+                </div>
+
+            </div>
+        </section>
+
+
+        <!-- =====================================================
+             Next
+        ====================================================== -->
+        <section class="next-project-section">
+            <div class="container">
+
+                <p class="eyebrow">
+                    PROJECTS
+                </p>
+
+                <a href="wtiin.html"
+                   class="next-project-link">
+                    <div>
+                        <span>01</span>
+                        <h2>What time is it now!?</h2>
+                    </div>
+
+                    <span>→</span>
+                </a>
+
+            </div>
+        </section>
+
+    </main>
+
+
+    <footer class="site-footer">
+        <div class="container footer-inner">
+
+            <span>
+                © 2026 김민서
+            </span>
+
+            <a href="../index.html">
+                Back to Home ↑
+            </a>
+
+        </div>
+    </footer>
+
+    <script src="../js/main.js"></script>
+
+</body>
+</html>

@@ -218,6 +218,25 @@
                     </div>
 
 
+                    <div class="cpp-impl">
+
+                        <p class="feature-label">
+                            C++ IMPLEMENTATION
+                        </p>
+
+                        <ul class="cpp-impl-list">
+                            <li>ETutorialStatus 기반 튜토리얼 진행 상태 관리</li>
+                            <li>Dynamic Multicast Delegate를 통한 게임 이벤트 연결</li>
+                            <li>AWTProjectile Base Class와 파생 Projectile의 역할 분리</li>
+                            <li>EBlockStatus 기반 파괴·복원 생명주기 관리</li>
+                            <li>TWeakObjectPtr와 TimerHandle을 활용한 객체 생명주기 처리</li>
+                            <li>Fragment Transform 저장 및 Lerp·Slerp 기반 복원</li>
+                            <li>클라이언트 물리 연출과 서버 피해 판정 분리</li>
+                        </ul>
+
+                    </div>
+
+
                     <p class="detail-note">
                         그 외 게임 내 UI, Skill Indicator, Audio,
                         Practice Mode 등의 클라이언트 기능을 담당했습니다.
@@ -253,7 +272,7 @@
                 </div>
 
 
-                <div class="feature-flow">
+                <div class="feature-flow feature-flow-5">
 
                     <div class="flow-item">
                         <span>01</span>
@@ -281,7 +300,7 @@
                         </strong>
 
                         <p>
-                            Chaos Geometry Collection 파괴
+                            External Cluster Strain을 적용해 Geometry Collection 파괴
                         </p>
                     </div>
 
@@ -295,11 +314,11 @@
                         <span>03</span>
 
                         <strong>
-                            Restore
+                            Push
                         </strong>
 
                         <p>
-                            Lerp / Slerp 기반 Fragment 복원
+                            타격 위치를 중심으로 Radial Vector를 적용해 파편 비산
                         </p>
                     </div>
 
@@ -313,13 +332,59 @@
                         <span>04</span>
 
                         <strong>
+                            Restore
+                        </strong>
+
+                        <p>
+                            Lerp와 Slerp 기반 위치·회전 보간
+                        </p>
+                    </div>
+
+
+                    <div class="flow-arrow">
+                        →
+                    </div>
+
+
+                    <div class="flow-item">
+                        <span>05</span>
+
+                        <strong>
                             Complete
                         </strong>
 
                         <p>
-                            정상 상태의 엄폐물로 복구
+                            복원 완료 후 정상 상태의 Breakable Actor 생성
                         </p>
                     </div>
+
+                </div>
+
+
+                <div class="status-flow">
+
+                    <p class="feature-label">
+                        EBlockStatus
+                    </p>
+
+                    <div class="tutorial-flow">
+                        <span>Unbroken</span>
+                        <b>→</b>
+                        <span>PendingBreak</span>
+                        <b>→</b>
+                        <span>Breaking</span>
+                        <b>→</b>
+                        <span>Broken</span>
+                        <b>→</b>
+                        <span>Restoring</span>
+                        <b>→</b>
+                        <span>Finished</span>
+                    </div>
+
+                    <p class="status-flow-note">
+                        파괴와 복원 과정을 단순 bool이 아니라 EBlockStatus 상태에 따라 관리해,
+                        상태별로 허용되는 처리만 수행하도록 구성했습니다.
+                    </p>
 
                 </div>
 
@@ -338,9 +403,17 @@
                         </h3>
 
                         <p>
-                            Geometry Collection의 파편 상태를 저장하고,
-                            복원 시 각 Fragment의 현재 위치와 원래 위치를
-                            보간하여 역행 애니메이션을 구현했습니다.
+                            Geometry Collection에 External Cluster Strain을 적용해
+                            파괴한 뒤, 타격 위치를 중심으로 URadialVector를 적용해
+                            파편을 비산시켰습니다. 타격 위치가 오브젝트 중심에서
+                            벗어나 있으므로 파편은 결과적으로 공격 반대 방향을
+                            중심으로 퍼지게 됩니다.
+                        </p>
+
+                        <p>
+                            복원 시에는 파괴 후 Fragment의 Transform을 시작점으로
+                            사용하고, 파괴 전에 저장한 Transform을 목표점으로 설정해
+                            위치와 회전을 보간했습니다.
                         </p>
 
                     </article>
@@ -369,6 +442,34 @@
                 </div>
 
 
+                <details class="code-details">
+                    <summary>코드 보기</summary>
+
+                    <p class="code-caption">
+                        실제 코드 일부 발췌 · WTBreakableBlockActor.cpp — UpdateRestore()
+                    </p>
+
+<pre><code>float Alpha = FMath::Clamp(RestoreElapsedTime / RestoreDuration, 0.f, 1.f);
+// ...
+    float EaseAlpha = FMath::InterpEaseIn(0.f, 1.f, Alpha, 2.5f);
+    // ...
+    for (int32 i = 0; i &lt; NumParticles; ++i)
+    {
+        // ...
+        FVector NewPos = FMath::Lerp(State.StartPosition, State.TargetPosition, EaseAlpha);
+        FQuat NewRot = FQuat::Slerp(State.StartRotation, State.TargetRotation, EaseAlpha);
+        Handle-&gt;SetX(NewPos);
+        Handle-&gt;SetR(NewRot);
+        // ...
+    }
+// ...
+if (RestoreElapsedTime &gt;= RestoreDuration)
+{
+    CompleteRestore();
+}</code></pre>
+                </details>
+
+
                 <!-- Network Troubleshooting -->
                 <div class="trouble-block">
 
@@ -381,11 +482,6 @@
                         네트워크 비용 개선
                     </h3>
 
-                    <p class="trouble-description">
-                        Fragment별 위치를 지속적으로 서버에서 판정하던 초기 방식에서
-                        네트워크 트래픽이 과도하게 증가하는 문제가 발생했습니다.
-                    </p>
-
 
                     <div class="compare-grid">
 
@@ -396,13 +492,14 @@
                             </span>
 
                             <strong>
-                                Fragment 위치를 지속적으로
-                                서버에서 판정
+                                Fragment Transform을 프레임마다
+                                동기화해 서버에서 판정
                             </strong>
 
                             <p>
-                                파편 수가 증가하면서 서버 처리 및
-                                네트워크 트래픽이 과도하게 증가했습니다.
+                                각 Fragment의 Transform을 지속적으로 동기화하면서
+                                파편 수에 비례해 패킷량이 증가하는 것을
+                                네트워크 프로파일링으로 확인했습니다.
                             </p>
 
                         </div>
@@ -420,14 +517,16 @@
                             </span>
 
                             <strong>
-                                물리 연출과 Gameplay 판정을
+                                물리 연출과 서버 피해 판정을
                                 분리
                             </strong>
 
                             <p>
-                                서버 및 기획 담당자와 논의하여
-                                개별 파편의 정밀 충돌 대신 비산 방향을 기준으로
-                                DamageVolume을 생성하도록 변경했습니다.
+                                Chaos Fragment의 물리 움직임과 서버 피해 판정을
+                                분리했습니다. Fragment의 개별 위치를 서버 판정에
+                                사용하지 않고, 마지막 공격자의 반대 방향에 Box 형태의
+                                DamageVolume을 배치한 뒤 서버에서 Overlap 대상과
+                                팀을 확인해 피해를 적용했습니다.
                             </p>
 
                         </div>
@@ -435,7 +534,108 @@
                     </div>
 
 
+                    <div class="calc-block">
+
+                        <p class="feature-label">
+                            구조에 따른 계산값 · 실제 측정값 아님
+                        </p>
+
+                        <p class="calc-description">
+                            맵에 배치된 20~30개의 BA가 각각 12개의 Fragment로 구성되어 있어,
+                            모든 BA가 동기화 대상인 최악의 조건에서는 프레임마다 최대
+                            240~360개의 Fragment Transform을 갱신해야 하는 구조였습니다.
+                        </p>
+
+                        <ul class="calc-list">
+                            <li><span>BA</span><strong>20~30개</strong></li>
+                            <li><span>BA당 Fragment</span><strong>12개</strong></li>
+                            <li><span>최악의 조건</span><strong>240~360회/프레임</strong></li>
+                            <li><span>30FPS 기준</span><strong>7,200~10,800회/초</strong></li>
+                            <li><span>60FPS 기준</span><strong>14,400~21,600회/초</strong></li>
+                        </ul>
+
+                        <p class="calc-note">
+                            위 수치는 Fragment Transform 갱신 단위의 이론값이며,
+                            측정한 패킷 수나 바이트 수가 아닙니다.
+                        </p>
+
+                    </div>
+
+
+                    <div class="volume-split">
+
+                        <div>
+                            <span>DamageVolume 생성 및 시각적 확인</span>
+                            <p>
+                                BA 내부에서 Runtime에 생성하는 UBoxComponent로,
+                                각 실행 환경에서 생성·확인이 가능합니다.
+                            </p>
+                        </div>
+
+                        <div>
+                            <span>실제 피해 적용</span>
+                            <p>
+                                Overlap 결과를 이용한 피해 적용은
+                                HasAuthority()를 확인한 서버에서 수행합니다.
+                            </p>
+                        </div>
+
+                    </div>
+
+
+                    <p class="trouble-description">
+                        개별 Fragment의 위치를 서버에서 지속적으로 추적하는 대신,
+                        게임플레이에 필요한 비산 방향을 LastAttacker 기준으로 계산하고
+                        해당 영역에 포함된 플레이어에게 일회성 피해를 적용했습니다.
+                        Chaos 파편의 실제 비산은 타격 위치 중심의 Radial Vector가 만들고,
+                        공격자의 위치는 DamageVolume의 배치 방향을 정하는 데 사용합니다.
+                    </p>
+
+
+                    <details class="code-details">
+                        <summary>코드 보기</summary>
+
+                        <p class="code-caption">
+                            실제 코드 일부 발췌 · WTBreakableBlockActor.cpp — CreateOverlapVolume()
+                        </p>
+
+<pre><code>FVector AttackerLocation = Attacker-&gt;GetActorLocation();
+
+// 마지막으로 공격한 플레이어의 위치를 로컬 좌표계로 변환
+FVector LocalPlayerLocation = GetActorTransform().InverseTransformPosition(AttackerLocation);
+
+FVector LastAttackerNormal = -LocalPlayerLocation.GetSafeNormal();
+
+// 데미지 볼륨의 Location 설정
+SpawnLocation = GetActorLocation() + GetActorTransform().TransformVectorNoScale(LastAttackerNormal * Offset);
+// ...
+DamageVolume = NewObject&lt;UBoxComponent&gt;(this, TEXT("Damage Volume"));
+// ...
+DamageVolume-&gt;SetCollisionResponseToAllChannels(ECR_Ignore);
+DamageVolume-&gt;SetCollisionResponseToChannel(CCHANNEL_WTBLUETEAMPAWNCHANNEL, ECR_Overlap);
+DamageVolume-&gt;SetCollisionResponseToChannel(CCHANNEL_WTREDTEAMPAWNCHANNEL, ECR_Overlap);</code></pre>
+
+                        <p class="code-caption">
+                            실제 코드 일부 발췌 · WTBreakableBlockActor.cpp — ApplyDamageToPlayer() (Breaking 상태)
+                        </p>
+
+<pre><code>if (HasAuthority()) // 서버에서만 바인딩 했지만 더블 체크
+{
+    // ...
+    uint8 AttackerTeam = LastAttacker-&gt;GetPlayerState&lt;AWTPlayerState&gt;()-&gt;GetTeam();
+    uint8 MyTeam = Player-&gt;GetPlayerState&lt;AWTPlayerState&gt;()-&gt;GetTeam();
+
+    if (AttackerTeam != MyTeam)
+    {
+        // ...
+        UGameplayStatics::ApplyDamage(Player, FragmentDamage, LastAttacker, LastAttacker-&gt;GetPawn(), UDamageType::StaticClass());
+    }
+}</code></pre>
+                    </details>
+
+
                     <p class="tradeoff-note">
+                        서버 및 기획 담당자와 논의해,
                         개별 Fragment의 정확한 충돌보다
                         파편이 날아가는 방향에 대한 위험 영역이
                         게임플레이상 중요하다고 판단하여 선택한 방식입니다.
@@ -587,6 +787,10 @@
                 </div>
 
 
+                <p class="feature-label flow-label">
+                    플레이어 행동 및 이벤트 흐름
+                </p>
+
                 <div class="tutorial-flow">
 
                     <span>Input Name</span>
@@ -601,7 +805,7 @@
 
                     <b>→</b>
 
-                    <span>Attack NPC</span>
+                    <span>Defeat Enemy</span>
 
                     <b>→</b>
 
@@ -635,6 +839,15 @@
                             Trigger 진입, Breakable Actor 파괴 및 복원,
                             Tutorial Enemy 사망 등의 이벤트를 받아
                             다음 Tutorial 단계로 진행하도록 구성했습니다.
+                            Breakable Actor와 Tutorial Enemy의 이벤트는
+                            Dynamic Multicast Delegate로 연결했습니다.
+                        </p>
+
+                        <p>
+                            Restore BA는 ETutorialStatus 값이 아니라
+                            UseSkill 상태에서 플레이어가 수행하는 행동입니다.
+                            UseSkill 상태에서 Breakable Actor 복원 이벤트를 대기하고,
+                            OnTutorialBARestored 이벤트를 수신하면 End 상태로 전환합니다.
                         </p>
 
                     </article>
@@ -651,16 +864,105 @@
                             객체 생명주기 문제 대응
                         </h3>
 
-                        <p>
-                            레벨 전환 과정에서 발생하던 크래시를 Debugger로
-                            추적하고, Timer Callback에서 TWeakObjectPtr로
-                            객체 유효성을 확인하며 TimerHandle을 관리하도록
-                            관련 코드를 보완했습니다.
-                        </p>
+                        <dl class="problem-steps">
+                            <div>
+                                <dt>문제</dt>
+                                <dd>
+                                    레벨 전환을 지연시키는 Timer Callback이 GameMode의
+                                    수명 이후 실행될 가능성으로 인해 크래시 발생
+                                </dd>
+                            </div>
+
+                            <div>
+                                <dt>원인</dt>
+                                <dd>
+                                    Timer 실행 시점과 Callback에서 참조하는
+                                    UObject의 생명주기 불일치
+                                </dd>
+                            </div>
+
+                            <div>
+                                <dt>해결</dt>
+                                <dd>
+                                    기존 TimerHandle을 정리하고 GameMode를
+                                    TWeakObjectPtr로 캡처한 뒤, Callback 실행 시
+                                    유효성을 확인하도록 변경
+                                </dd>
+                            </div>
+                        </dl>
 
                     </article>
 
                 </div>
+
+
+                <p class="code-lead">
+                    기존 Timer를 정리하는 처리와 약한 참조를 통한 객체 유효성 검사를
+                    함께 적용해, 지연 실행 시점에 GameMode가 유효할 때만 레벨을
+                    전환하도록 했습니다.
+                </p>
+
+                <details class="code-details">
+                    <summary>코드 보기</summary>
+
+                    <p class="code-caption">
+                        실제 코드 일부 발췌 · WTTutorialGamemode.cpp — OpenMainMenu()
+                    </p>
+
+<pre><code>void AWTTutorialGamemode::OpenMainMenu()
+{
+    // 1) 이미 타이머가 돌고 있다면 취소
+    GetWorldTimerManager().ClearTimer(MainMenuTimerHandle);
+    // 2) 약한 참조 캡처
+    TWeakObjectPtr&lt;AWTTutorialGamemode&gt; WeakThis(this);
+    // 3) 5초 뒤에 실제 레벨 전환
+    GetWorldTimerManager().SetTimer(
+        MainMenuTimerHandle,
+        FTimerDelegate::CreateLambda([WeakThis]()
+            {
+                if (!WeakThis.IsValid()) return;
+                // 안전하게 레벨 전환
+                UGameplayStatics::OpenLevel(WeakThis.Get(), FName(TEXT("MainMenuLevel")), true);
+            }),
+        5.0f,
+        false
+    );
+}</code></pre>
+                </details>
+
+
+                <p class="code-lead">
+                    각 이벤트 핸들러는 현재 상태를 확인한 뒤 다음 상태로 전환합니다.
+                    Breakable Actor 파괴 이벤트는 AttackBA에서 AttackNPC로,
+                    복원 이벤트는 UseSkill에서 End로 전환합니다.
+                </p>
+
+                <details class="code-details">
+                    <summary>코드 보기</summary>
+
+                    <p class="code-caption">
+                        실제 코드 일부 발췌 · WTTutorialGamemode.cpp — BeginPlay(), OnTutorialBADestroyed(), OnTutorialBARestored() (UE_LOG 생략)
+                    </p>
+
+<pre><code>BA-&gt;OnTargetActorDestroyed.AddDynamic(this, &amp;AWTTutorialGamemode::OnTutorialBADestroyed);
+BA-&gt;OnTargetActorRestored.AddDynamic(this, &amp;AWTTutorialGamemode::OnTutorialBARestored);
+// ...
+void AWTTutorialGamemode::OnTutorialBADestroyed(AActor* DestroyedActor)
+{
+    if (CurrentStatus == ETutorialStatus::AttackBA)
+    {
+        ChangeStatus(ETutorialStatus::AttackNPC);
+    }
+}
+// ...
+void AWTTutorialGamemode::OnTutorialBARestored(AActor* RestoredActor)
+{
+    if (CurrentStatus == ETutorialStatus::UseSkill)
+    {
+        ChangeStatus(ETutorialStatus::End);
+    }
+}</code></pre>
+                </details>
 
             </div>
         </section>
@@ -726,6 +1028,151 @@
                     구현했습니다. 공통 기능을 Base에 두어 반복 구현을 줄이고,
                     각 Projectile은 고유 동작 구현에 집중할 수 있도록 구성했습니다.
                 </p>
+
+                <p class="base-description">
+                    공통 충돌, 팀 판정, 데미지, 최대 사거리와 서버 측 Hit 처리를
+                    AWTProjectile에 구성했습니다. 파생 클래스인 AWTProjectileDescent에서는
+                    공통 처리 과정을 재사용하면서 S자 이동 경로와 Niagara 이펙트 등
+                    고유 동작만 재정의했습니다.
+                </p>
+
+
+                <p class="feature-label flow-label">
+                    상속 관계
+                </p>
+
+                <div class="tutorial-flow">
+                    <span>AWTProjectile</span>
+                    <b>→</b>
+                    <span>AWTProjectileDescent</span>
+                </div>
+
+
+                <div class="feature-text-grid">
+
+                    <article>
+
+                        <p class="feature-label">
+                            BASE CLASS · AWTProjectile
+                        </p>
+
+                        <h3>
+                            공통 게임 규칙
+                        </h3>
+
+                        <ul class="feature-list">
+                            <li>SphereComponent 기반 충돌</li>
+                            <li>StaticMeshComponent 기반 시각 표현</li>
+                            <li>팀별 Collision Profile (Team 0 → CPROFILE_WTREDPROJECTILE, Team 1 → CPROFILE_WTBLUEPROJECTILE)</li>
+                            <li>OnComponentHit Delegate 바인딩</li>
+                            <li>bHasHit 기반 중복 충돌 방지</li>
+                            <li>NetMode 검사를 통한 서버 측 데미지 처리</li>
+                            <li>일반 Damage와 Point Damage 처리</li>
+                            <li>최대 이동 거리 검사</li>
+                            <li>ProjectileSpeed Replication</li>
+                            <li>SpawnHitEffect() virtual 확장 지점</li>
+                        </ul>
+
+                    </article>
+
+
+                    <article>
+
+                        <p class="feature-label">
+                            DERIVED CLASS · AWTProjectileDescent
+                        </p>
+
+                        <h3>
+                            Projectile별 움직임과 연출
+                        </h3>
+
+                        <ul class="feature-list">
+                            <li>BeginPlay() 재정의</li>
+                            <li>Tick() 재정의</li>
+                            <li>SpawnHitEffect() 재정의</li>
+                            <li>sin 함수를 이용한 S자 이동 경로</li>
+                            <li>Niagara 발사 및 충돌 이펙트</li>
+                        </ul>
+
+                    </article>
+
+                </div>
+
+
+                <p class="code-lead">
+                    Base Class는 공통 게임 규칙을 담당하고, 파생 클래스는 Projectile별
+                    움직임과 연출에 집중하도록 역할을 분리했습니다. 아래 코드는
+                    직접 확인할 수 있는 파생 클래스인 AWTProjectileDescent를 대표 사례로 사용합니다.
+                </p>
+
+                <details class="code-details">
+                    <summary>코드 보기</summary>
+
+                    <p class="code-caption">
+                        실제 코드 일부 발췌 · WTProjectile.h — Base 가상 함수
+                    </p>
+
+<pre><code>class WTIIN_API AWTProjectile : public AActor, public IWTProjectileInterface
+{
+    // ...
+protected:
+    // 충돌 시점의 Hit 정보를 넘겨받아 이펙트를 스폰하는 훅
+    virtual void SpawnHitEffect() {}
+    // ...
+};</code></pre>
+
+                    <p class="code-caption">
+                        실제 코드 일부 발췌 · WTProjectileDescent.h — override 선언
+                    </p>
+
+<pre><code>class WTIIN_API AWTProjectileDescent : public AWTProjectile
+{
+    GENERATED_BODY()
+    // ...
+protected:
+    virtual void Tick(float DeltaTime) override;
+
+    virtual void BeginPlay() override;
+    // ...
+    virtual void SpawnHitEffect() override;
+    // ...
+};</code></pre>
+                </details>
+
+
+                <p class="code-lead">
+                    Descent의 Tick()은 초기 전방 방향의 선형 이동(LinearOffset)에
+                    sin 값으로 계산한 측면 이동(LateralOffset)을 더해 S자 경로를 만듭니다.
+                </p>
+
+                <details class="code-details">
+                    <summary>코드 보기</summary>
+
+                    <p class="code-caption">
+                        실제 코드 일부 발췌 · WTProjectileDescent.cpp — Tick() (원본 주석 생략)
+                    </p>
+
+<pre><code>void AWTProjectileDescent::Tick(float DeltaTime)
+{
+    Super::Tick(DeltaTime);
+
+    AccumulatedDistance += ProjectileSpeed * DeltaTime;
+
+    float u = AccumulatedDistance / 800.0f;
+    u = FMath::Clamp(u, 0.0f, 1.0f);
+
+    FVector LinearOffset = InitialForwardVector * AccumulatedDistance;
+    FVector SideDirection = FVector(-InitialForwardVector.Y, InitialForwardVector.X, 0.f).GetSafeNormal();
+
+    float LateralFactor = FMath::Sin(2 * PI * u);
+    FVector LateralOffset = SideDirection * (CurveAmplitude * LateralFactor);
+
+    FVector NewLocation = InitialLocation + LinearOffset + LateralOffset;
+    SetActorLocation(NewLocation, true);
+
+    CheckMovedDistance();
+}</code></pre>
+                </details>
 
             </div>
         </section>
