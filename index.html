@@ -32,6 +32,7 @@
 
             <nav class="main-nav">
                 <a href="#projects">Projects</a>
+                <a href="#experience">Experience</a>
                 <a href="#skills">Skills</a>
 
                 <span class="nav-divider"></span>
@@ -40,12 +41,6 @@
                    target="_blank"
                    rel="noopener noreferrer">
                     GitHub
-                </a>
-
-                <a href="https://gitlab.com/HwangHyejin/tenet-project"
-                   target="_blank"
-                   rel="noopener noreferrer">
-                    Team Repo
                 </a>
 
             </nav>
@@ -314,28 +309,39 @@
 
                     <article class="info-card">
                         <span class="card-number">01</span>
-                        <h3>Gameplay Implementation</h3>
+                        <h3>State &amp; Gameplay Flow</h3>
                         <p>
-                            기획된 게임 규칙을 캐릭터, 충돌, 상태와 UI 등
-                            실제 플레이 가능한 시스템으로 구현합니다.
+                            게임 규칙과 상태를 기준으로 여러 시스템의 이벤트를 연결해
+                            하나의 플레이 흐름으로 구현합니다.
+                        </p>
+                        <p class="info-card-evidence">
+                            ETutorialStatus 기반 Tutorial 진행, EBlockStatus 기반
+                            Breakable Actor 생명주기 관리
                         </p>
                     </article>
 
                     <article class="info-card">
                         <span class="card-number">02</span>
-                        <h3>Problem Solving</h3>
+                        <h3>Constraint-driven Problem Solving</h3>
                         <p>
-                            문제의 증상만 수정하기보다 원인을 추적하고,
-                            성능과 객체 생명주기를 고려해 구현 구조를 개선합니다.
+                            기술적 제약이 발생하면 게임에서 실제로 필요한 동작과
+                            정확도를 먼저 정의하고, 이를 유지하면서 구현 구조를
+                            다시 검토합니다.
+                        </p>
+                        <p class="info-card-evidence">
+                            Chaos Fragment 연출과 DamageVolume 판정 분리
                         </p>
                     </article>
 
                     <article class="info-card">
                         <span class="card-number">03</span>
-                        <h3>Player Perspective</h3>
+                        <h3>Player-side Validation</h3>
                         <p>
-                            기능 구현 후 직접 플레이하며 조작감과 정보 전달이
-                            의도대로 동작하는지 확인하고 개선합니다.
+                            기능 구현 후 직접 플레이하며 조작감과 정보 전달,
+                            연출이 의도대로 동작하는지 확인하고 개선합니다.
+                        </p>
+                        <p class="info-card-evidence">
+                            Floating Joystick · Interactable Outline · First Launch Tutorial
                         </p>
                     </article>
 
@@ -383,6 +389,23 @@
                     </div>
 
                     <div class="skill-row">
+                        <h3>Graphics</h3>
+                        <div>
+                            <span>OpenGL 3.3</span>
+                            <span>GLSL</span>
+                            <span>DirectX 12</span>
+                        </div>
+                    </div>
+
+                    <div class="skill-row">
+                        <h3>Network</h3>
+                        <div>
+                            <span>WinSock</span>
+                            <span>TCP</span>
+                        </div>
+                    </div>
+
+                    <div class="skill-row">
                         <h3>Development Tools</h3>
                         <div>
                             <span>Git</span>
@@ -409,7 +432,8 @@
 
                 <div class="problem-grid">
 
-                    <article class="problem-card">
+                    <a href="projects/wtiin.html#network-cost"
+                       class="problem-card problem-card-link">
                         <p class="problem-category">
                             MULTIPLAYER · GAMEPLAY
                         </p>
@@ -426,11 +450,15 @@
                             물리 연출과 게임플레이 판정을 분리했습니다.
                         </p>
 
-                        <span class="problem-project">WTIIN</span>
-                    </article>
+                        <span class="problem-project">
+                            WTIIN
+                            <span class="problem-link">View details →</span>
+                        </span>
+                    </a>
 
 
-                    <article class="problem-card">
+                    <a href="projects/wtiin.html#timer-lifecycle"
+                       class="problem-card problem-card-link">
                         <p class="problem-category">
                             DEBUGGING · LIFECYCLE
                         </p>
@@ -446,11 +474,15 @@
                             고려하도록 관련 구현을 보완했습니다.
                         </p>
 
-                        <span class="problem-project">WTIIN</span>
-                    </article>
+                        <span class="problem-project">
+                            WTIIN
+                            <span class="problem-link">View details →</span>
+                        </span>
+                    </a>
 
 
-                    <article class="problem-card">
+                    <a href="projects/wtiin.html#character-preview"
+                       class="problem-card problem-card-link">
                         <p class="problem-category">
                             RENDERING · UI
                         </p>
@@ -461,13 +493,18 @@
                         </h3>
 
                         <p>
-                            결과 화면에 3D 캐릭터를 표시하는 과정에서
-                            단순 SceneCapture만으로 원하는 배경 처리가 되지 않아
-                            Custom Stencil과 Post Process 기반 처리 방식을 적용했습니다.
+                            결과 화면에 3D 캐릭터를 표시하는 과정에서 일반적인
+                            SceneCapture 출력으로는 원하는 배경 투명도를 얻기
+                            어려웠습니다. ‘SceneColor (HDR) in RGB, Inv Opacity in A’
+                            Capture Source로 얻은 Alpha 정보를 UI Material에서
+                            OneMinus로 반전해 캐릭터 영역만 표시하도록 구성했습니다.
                         </p>
 
-                        <span class="problem-project">WTIIN</span>
-                    </article>
+                        <span class="problem-project">
+                            WTIIN
+                            <span class="problem-link">View details →</span>
+                        </span>
+                    </a>
 
                 </div>
 

@@ -471,7 +471,7 @@ if (RestoreElapsedTime &gt;= RestoreDuration)
 
 
                 <!-- Network Troubleshooting -->
-                <div class="trouble-block">
+                <div id="network-cost" class="trouble-block anchor-target">
 
                     <p class="feature-label">
                         PROBLEM SOLVING · MULTIPLAYER
@@ -737,7 +737,7 @@ DamageVolume-&gt;SetCollisionResponseToChannel(CCHANNEL_WTREDTEAMPAWNCHANNEL, EC
                     </article>
 
 
-                    <article>
+                    <article id="character-preview" class="anchor-target">
 
                         <p class="feature-label">
                             PROBLEM SOLVING
@@ -749,9 +749,11 @@ DamageVolume-&gt;SetCollisionResponseToChannel(CCHANNEL_WTREDTEAMPAWNCHANNEL, EC
                         </h3>
 
                         <p>
-                            단순 SceneCapture 설정만으로 원하는 캐릭터 배경
-                            처리가 되지 않아 Custom Stencil과
-                            Post Process 기반 렌더링 처리를 적용했습니다.
+                            SceneCapture의 SceneColor (HDR) in RGB, Inv Opacity in A
+                            Capture Source를 사용해 RenderTarget의 RGB에 캐릭터 색상을,
+                            Alpha에 Inverse Opacity를 저장했습니다. Alpha 값이 원하는
+                            마스크와 반대였기 때문에 UI Material에서 OneMinus로 반전해
+                            캐릭터만 불투명하게 표시하고 배경은 투명하게 처리했습니다.
                         </p>
 
                     </article>
@@ -853,7 +855,7 @@ DamageVolume-&gt;SetCollisionResponseToChannel(CCHANNEL_WTREDTEAMPAWNCHANNEL, EC
                     </article>
 
 
-                    <article>
+                    <article id="timer-lifecycle" class="anchor-target">
 
                         <p class="feature-label">
                             DEBUGGING
