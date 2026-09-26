@@ -255,6 +255,95 @@
         </section>
 
 
+        <!-- Problem Solving -->
+        <section class="section problem-section">
+            <div class="container">
+
+                <div class="section-heading">
+                    <p class="eyebrow">ENGINEERING EXPERIENCE</p>
+                    <h2>Problem Solving</h2>
+                </div>
+
+                <div class="problem-grid">
+
+                    <a href="projects/wtiin.html#network-cost"
+                       class="problem-card problem-card-link">
+                        <p class="problem-category">
+                            MULTIPLAYER · GAMEPLAY
+                        </p>
+
+                        <h3>
+                            Fragment 단위 판정으로 증가한
+                            네트워크 비용
+                        </h3>
+
+                        <p>
+                            파편별 충돌을 지속적으로 서버에서 판정하던 방식에서
+                            과도한 네트워크 트래픽이 확인되었습니다.
+                            서버 및 기획 담당과 필요한 판정 수준을 재검토하고
+                            물리 연출과 게임플레이 판정을 분리했습니다.
+                        </p>
+
+                        <span class="problem-project">
+                            WTIIN
+                            <span class="problem-link">View details →</span>
+                        </span>
+                    </a>
+
+
+                    <a href="projects/wtiin.html#timer-lifecycle"
+                       class="problem-card problem-card-link">
+                        <p class="problem-category">
+                            DEBUGGING · LIFECYCLE
+                        </p>
+
+                        <h3>
+                            레벨 전환 과정에서 발생한
+                            Timer Lifecycle 문제
+                        </h3>
+
+                        <p>
+                            게임 종료 및 레벨 전환 과정에서 발생하던 크래시를
+                            Debugger로 추적하고, Timer Callback에서 객체 생명주기를
+                            고려하도록 관련 구현을 보완했습니다.
+                        </p>
+
+                        <span class="problem-project">
+                            WTIIN
+                            <span class="problem-link">View details →</span>
+                        </span>
+                    </a>
+
+
+                    <a href="projects/wtiin.html#character-preview"
+                       class="problem-card problem-card-link">
+                        <p class="problem-category">
+                            RENDERING · UI
+                        </p>
+
+                        <h3>
+                            SceneCapture에서
+                            캐릭터 배경 분리
+                        </h3>
+
+                        <p>
+                            SceneCapture의 Alpha가 원하는 마스크와 반대로 출력되는
+                            문제를 확인하고, Inverse Opacity 값을 UI Material에서
+                            OneMinus로 반전해 캐릭터와 배경을 분리했습니다.
+                        </p>
+
+                        <span class="problem-project">
+                            WTIIN
+                            <span class="problem-link">View details →</span>
+                        </span>
+                    </a>
+
+                </div>
+
+            </div>
+        </section>
+
+
         <!-- Technical Experience -->
         <section id="experience" class="section experience-section">
             <div class="container">
@@ -406,6 +495,15 @@
                     </div>
 
                     <div class="skill-row">
+                        <h3>CS Fundamentals</h3>
+                        <div>
+                            <span>Operating Systems</span>
+                            <span>Computer Networks</span>
+                            <span>Computer Graphics</span>
+                        </div>
+                    </div>
+
+                    <div class="skill-row">
                         <h3>Development Tools</h3>
                         <div>
                             <span>Git</span>
@@ -417,97 +515,6 @@
                     </div>
 
                 </div>
-            </div>
-        </section>
-
-
-        <!-- Problem Solving -->
-        <section class="section problem-section">
-            <div class="container">
-
-                <div class="section-heading">
-                    <p class="eyebrow">ENGINEERING EXPERIENCE</p>
-                    <h2>Problem Solving</h2>
-                </div>
-
-                <div class="problem-grid">
-
-                    <a href="projects/wtiin.html#network-cost"
-                       class="problem-card problem-card-link">
-                        <p class="problem-category">
-                            MULTIPLAYER · GAMEPLAY
-                        </p>
-
-                        <h3>
-                            Fragment 단위 판정으로 증가한
-                            네트워크 비용
-                        </h3>
-
-                        <p>
-                            파편별 충돌을 지속적으로 서버에서 판정하던 방식에서
-                            과도한 네트워크 트래픽이 확인되었습니다.
-                            서버 및 기획 담당과 필요한 판정 수준을 재검토하고
-                            물리 연출과 게임플레이 판정을 분리했습니다.
-                        </p>
-
-                        <span class="problem-project">
-                            WTIIN
-                            <span class="problem-link">View details →</span>
-                        </span>
-                    </a>
-
-
-                    <a href="projects/wtiin.html#timer-lifecycle"
-                       class="problem-card problem-card-link">
-                        <p class="problem-category">
-                            DEBUGGING · LIFECYCLE
-                        </p>
-
-                        <h3>
-                            레벨 전환 과정에서 발생한
-                            Timer Lifecycle 문제
-                        </h3>
-
-                        <p>
-                            게임 종료 및 레벨 전환 과정에서 발생하던 크래시를
-                            Debugger로 추적하고, Timer Callback에서 객체 생명주기를
-                            고려하도록 관련 구현을 보완했습니다.
-                        </p>
-
-                        <span class="problem-project">
-                            WTIIN
-                            <span class="problem-link">View details →</span>
-                        </span>
-                    </a>
-
-
-                    <a href="projects/wtiin.html#character-preview"
-                       class="problem-card problem-card-link">
-                        <p class="problem-category">
-                            RENDERING · UI
-                        </p>
-
-                        <h3>
-                            SceneCapture에서
-                            캐릭터 배경 분리
-                        </h3>
-
-                        <p>
-                            결과 화면에 3D 캐릭터를 표시하는 과정에서 일반적인
-                            SceneCapture 출력으로는 원하는 배경 투명도를 얻기
-                            어려웠습니다. ‘SceneColor (HDR) in RGB, Inv Opacity in A’
-                            Capture Source로 얻은 Alpha 정보를 UI Material에서
-                            OneMinus로 반전해 캐릭터 영역만 표시하도록 구성했습니다.
-                        </p>
-
-                        <span class="problem-project">
-                            WTIIN
-                            <span class="problem-link">View details →</span>
-                        </span>
-                    </a>
-
-                </div>
-
             </div>
         </section>
 
