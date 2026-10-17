@@ -86,6 +86,7 @@
                         <span>C#</span>
                         <span>URP</span>
                         <span>Android</span>
+                        <span>Object Pooling</span>
                     </div>
 
 
@@ -111,7 +112,10 @@
 
                     <div>
                         <dt>Period</dt>
-                        <dd>2026.08.25 — 09.03</dd>
+                        <dd>
+                            2026.08.25 — 09.03
+                            <span class="ss-period-note">Optimization · 2026.10</span>
+                        </dd>
                     </div>
 
                     <div>
@@ -126,7 +130,7 @@
 
                     <div>
                         <dt>Build / Test</dt>
-                        <dd>APK · Emulator</dd>
+                        <dd>APK · Emulator · Galaxy S25+</dd>
                     </div>
 
                 </dl>
@@ -387,7 +391,8 @@
 
                         <p>
                             판매 존에 머무르면 Stack 상단의 아이템부터
-                            하나씩 판매대로 이동한 뒤 제거되고,
+                            하나씩 판매대로 이동하고, 판매 애니메이션이 끝나면
+                            원래 풀로 반환됩니다.
                             판매된 수량만큼 Gold가 증가합니다.
                         </p>
 
@@ -400,9 +405,476 @@
 
 
         <!-- =====================================================
+             Object Pooling Optimization
+        ====================================================== -->
+        <section id="object-pooling" class="detail-section detail-section-dark">
+            <div class="container">
+
+                <div class="feature-heading">
+
+                    <p class="eyebrow">
+                        OPTIMIZATION · OBJECT POOLING
+                    </p>
+
+                    <h2>
+                        Object Pooling Optimization
+                    </h2>
+
+                    <p class="feature-description">
+                        수집·판매 루프에서 반복되던 아이템 생성·파괴를 재사용 구조로 변경하고,
+                        실제 게임 로직을 그대로 사용하는 자동화 벤치마크와
+                        Android 실기기 측정으로 개선 효과를 검증했습니다.
+                    </p>
+
+                    <ul class="ss-pool-summary">
+                        <li>Galaxy S25+ 반복 구간</li>
+                        <li>GC Alloc −16.2%</li>
+                        <li>할당 이벤트 −21.1%</li>
+                        <li>Frame Time 변화 없음</li>
+                    </ul>
+
+                </div>
+
+
+                <!-- A. Structure -->
+                <div class="ss-pool-block">
+
+                    <p class="feature-label">
+                        STRUCTURE
+                    </p>
+
+                    <h3>
+                        Instantiate / Destroy → Pool.Get / Pool.Release
+                    </h3>
+
+
+                    <div class="ss-pool-compare">
+
+                        <div class="ss-pool-row">
+
+                            <span class="ss-pool-row-label">BEFORE</span>
+
+                            <ol class="ss-pool-flow">
+                                <li>SSItemZone</li>
+                                <li class="is-changed">Instantiate</li>
+                                <li>Collect</li>
+                                <li>Sell</li>
+                                <li class="is-changed">Destroy</li>
+                            </ol>
+
+                            <p>
+                                아이템 1개를 수집·판매할 때마다
+                                GameObject가 1개 생성되고 1개 파괴됩니다.
+                            </p>
+
+                        </div>
+
+
+                        <div class="ss-pool-row ss-pool-row-after">
+
+                            <span class="ss-pool-row-label">AFTER</span>
+
+                            <ol class="ss-pool-flow">
+                                <li>SSItemZone</li>
+                                <li class="is-changed">Pool.Get</li>
+                                <li>Collect</li>
+                                <li>Sell</li>
+                                <li class="is-changed">Pool.Release</li>
+                            </ol>
+
+                            <p>
+                                판매 애니메이션이 끝난 아이템은 비활성화되어
+                                원래 생산 존의 풀로 반환되고,
+                                <strong>↺ 다음 수집에서 재사용</strong>됩니다.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- B. Design Decisions -->
+                <div class="ss-pool-block">
+
+                    <p class="feature-label">
+                        DESIGN DECISIONS
+                    </p>
+
+                    <h3>
+                        기존 구조를 활용하고, 재사용이 만드는 문제를 먼저 검토
+                    </h3>
+
+
+                    <div class="ss-pool-decision-grid">
+
+                        <article>
+
+                            <span>01 · POOL OWNERSHIP</span>
+
+                            <h4>
+                                생산 존별 독립 풀
+                            </h4>
+
+                            <p>
+                                SSItemZone이 이미 아이템 프리팹을 관리하고 있어,
+                                존마다 <code>ObjectPool&lt;SSItem&gt;</code>을 소유하도록 설계했습니다.
+                                전역 PoolManager나 프리팹 조회용 딕셔너리 없이
+                                기존 구조를 그대로 활용합니다.
+                            </p>
+
+                            <p>
+                                SSItem이 자신을 만든 풀을 기억하므로,
+                                판매 존은 아이템 종류를 판단하지 않고
+                                <code>ReturnToPool()</code>만 호출합니다.
+                            </p>
+
+                            <p class="ss-pool-note">
+                                전역 매니저 · MonoBehaviour 풀 · 데이터 기반 조회 방식과 비교 후 선택
+                            </p>
+
+                        </article>
+
+
+                        <article>
+
+                            <span>02 · COROUTINE LIFECYCLE</span>
+
+                            <h4>
+                                재사용 객체의 이동 코루틴 정리
+                            </h4>
+
+                            <p>
+                                기존에는 아이템이 파괴되면 <code>null</code> 검사로
+                                스택 이동 코루틴이 스스로 종료됐지만,
+                                풀링 후에는 객체가 파괴되지 않아 이전 코루틴이 남을 수 있습니다.
+                            </p>
+
+                            <p>
+                                부모 Transform 검사는 재사용된 아이템이 같은 stackRoot에
+                                다시 붙으면 통과해 버리므로, 아이템별 코루틴 핸들을 보관하고
+                                <code>RemoveOneItem</code> 시점에 <code>StopCoroutine</code>으로
+                                중지하도록 설계했습니다.
+                            </p>
+
+                            <p class="ss-pool-note">
+                                실제 발생한 버그가 아니라, 설계 단계에서 검토해 예방한 잠재적 문제입니다.
+                            </p>
+
+                        </article>
+
+
+                        <article>
+
+                            <span>03 · PREWARM 0</span>
+
+                            <h4>
+                                최초 생성과 재사용 비용 분리
+                            </h4>
+
+                            <p>
+                                프리웜을 하면 최초 생성 비용이 측정 전 초기화 단계로
+                                옮겨질 수 있습니다.
+                            </p>
+
+                            <p>
+                                첫 사이클은 신규 생성(생성 5회),
+                                이후 사이클은 반환된 객체 재사용(생성 0회)이 되도록
+                                프리웜을 0으로 두었습니다.
+                            </p>
+
+                            <p class="ss-pool-note">
+                                이번 실험의 비교 가능성을 위한 결정이며,
+                                실제 서비스에서 프리웜이 불필요하다는 의미는 아닙니다.
+                            </p>
+
+                        </article>
+
+                    </div>
+
+                </div>
+
+
+                <!-- C. Benchmark -->
+                <div class="ss-pool-block">
+
+                    <p class="feature-label">
+                        AUTOMATED BENCHMARK
+                    </p>
+
+                    <h3>
+                        같은 게임 로직, 같은 측정 조건
+                    </h3>
+
+                    <p class="ss-pool-text">
+                        SSBenchmarkRunner는 플레이어 입력만 대신하고,
+                        아이템 생성·수집·판매는 실제 게임의 SSItemZone 코루틴이 그대로 처리합니다.
+                        Before / After 모두 같은 러너를 사용해 구현 차이 외의 조건을 통제했습니다.
+                    </p>
+
+
+                    <div class="ss-pool-spec-grid">
+
+                        <div>
+                            <span>CYCLE</span>
+                            <strong>5개 수집 → 5개 판매</strong>
+                        </div>
+
+                        <div>
+                            <span>RUNS</span>
+                            <strong>10사이클 × 5회</strong>
+                            <p>Before / After 각각</p>
+                        </div>
+
+                        <div>
+                            <span>PHASE</span>
+                            <strong>First / Repeat 분리</strong>
+                            <p>1사이클 / 2~10사이클</p>
+                        </div>
+
+                        <div>
+                            <span>METRICS</span>
+                            <strong>ProfilerRecorder</strong>
+                            <p>
+                                Main Thread · Frame Time · GC Alloc<br>
+                                + Profile Analyzer로 아이템 획득 구간 별도 측정 (Editor)
+                            </p>
+                        </div>
+
+                    </div>
+
+                    <p class="ss-pool-note">
+                        세이브·업그레이드 차단 · 적재량 5 고정 · 고정 속도 이동 ·
+                        측정 중 러너 자체 할당 방지 · Before 빌드는 Git Worktree로 분리
+                    </p>
+
+                </div>
+
+
+                <!-- D. Device Result -->
+                <div class="ss-pool-block">
+
+                    <p class="feature-label">
+                        DEVICE RESULT
+                    </p>
+
+                    <h3>
+                        Galaxy S25+ 실기기 측정 — 반복 구간
+                    </h3>
+
+
+                    <dl class="ss-pool-env">
+
+                        <div>
+                            <dt>Device</dt>
+                            <dd>Galaxy S25+ (SM-S936N)</dd>
+                        </div>
+
+                        <div>
+                            <dt>Engine</dt>
+                            <dd>Unity 6000.5.0f1</dd>
+                        </div>
+
+                        <div>
+                            <dt>Build</dt>
+                            <dd>Android Development · IL2CPP / ARM64</dd>
+                        </div>
+
+                        <div>
+                            <dt>Target</dt>
+                            <dd>60 FPS</dd>
+                        </div>
+
+                        <div>
+                            <dt>Sample</dt>
+                            <dd>Repeat 사이클 각 45개</dd>
+                        </div>
+
+                    </dl>
+
+
+                    <div class="ss-pool-metric-grid">
+
+                        <article>
+
+                            <span>GC ALLOC / CYCLE</span>
+
+                            <strong class="ss-pool-delta">−16.2%</strong>
+
+                            <div class="ss-pool-bars">
+
+                                <div class="ss-pool-bar">
+                                    <span>Before</span>
+                                    <i style="--w: 100%" aria-hidden="true"></i>
+                                    <b>2,720 B</b>
+                                </div>
+
+                                <div class="ss-pool-bar is-after">
+                                    <span>After</span>
+                                    <i style="--w: 83.8%" aria-hidden="true"></i>
+                                    <b>2,280 B</b>
+                                </div>
+
+                            </div>
+
+                            <p>
+                                사이클당 관리 힙 할당량 (평균)
+                            </p>
+
+                        </article>
+
+
+                        <article>
+
+                            <span>GC ALLOCATION COUNT / CYCLE</span>
+
+                            <strong class="ss-pool-delta">−21.1%</strong>
+
+                            <div class="ss-pool-bars">
+
+                                <div class="ss-pool-bar">
+                                    <span>Before</span>
+                                    <i style="--w: 100%" aria-hidden="true"></i>
+                                    <b>71.22회</b>
+                                </div>
+
+                                <div class="ss-pool-bar is-after">
+                                    <span>After</span>
+                                    <i style="--w: 78.9%" aria-hidden="true"></i>
+                                    <b>56.22회</b>
+                                </div>
+
+                            </div>
+
+                            <p>
+                                관리 힙 <strong>할당 이벤트</strong> 횟수 —
+                                GC 수집(실행) 횟수가 아닙니다.
+                            </p>
+
+                        </article>
+
+
+                        <article class="is-neutral">
+
+                            <span>MAIN THREAD / FRAME TIME</span>
+
+                            <strong class="ss-pool-delta">변화 없음</strong>
+
+                            <dl class="ss-pool-time">
+
+                                <div>
+                                    <dt>Main Thread 중앙값</dt>
+                                    <dd>16.673 → 16.674 ms</dd>
+                                </div>
+
+                                <div>
+                                    <dt>Frame Time 중앙값</dt>
+                                    <dd>16.686 → 16.686 ms</dd>
+                                </div>
+
+                            </dl>
+
+                            <p>
+                                60 FPS 상한(16.67ms)에서 의미 있는 차이가 관측되지 않았습니다.
+                            </p>
+
+                        </article>
+
+                    </div>
+
+                </div>
+
+
+                <!-- E. Interpretation -->
+                <div class="ss-pool-block">
+
+                    <p class="feature-label">
+                        INTERPRETATION
+                    </p>
+
+                    <h3>
+                        확인한 것과 확인하지 못한 것
+                    </h3>
+
+                    <p class="ss-pool-text">
+                        Unity Editor 전체 측정에서는 사이클당 약 16MB가 기록되어,
+                        Editor 자체 할당과 풀링 효과를 구분할 수 없었습니다.
+                        이를 보완하기 위해 같은 러너로 Galaxy S25+에서 동일 조건으로 재측정했습니다.
+                    </p>
+
+
+                    <div class="ss-pool-result-grid">
+
+                        <article>
+
+                            <span class="is-confirmed">확인</span>
+
+                            <h4>
+                                객체 재사용
+                            </h4>
+
+                            <p>
+                                Editor Profile Analyzer 재사용 구간에서
+                                <code>PoolCreateItem</code> 호출 0회,
+                                <code>PoolGetItem</code> / <code>PoolReleaseItem</code>
+                                GC Alloc 0B를 확인했습니다.
+                            </p>
+
+                        </article>
+
+
+                        <article>
+
+                            <span class="is-confirmed">확인</span>
+
+                            <h4>
+                                관리 힙 할당 감소
+                            </h4>
+
+                            <p>
+                                실기기 반복 구간에서 사이클당 440B, 할당 이벤트 15회가
+                                감소했습니다 (아이템당 평균 88B / 3회).
+                                같은 변경에 코루틴 관리 코드도 포함되어 있어,
+                                전부 Instantiate 제거의 효과라고 단정하지 않습니다.
+                            </p>
+
+                        </article>
+
+
+                        <article>
+
+                            <span>확인되지 않음</span>
+
+                            <h4>
+                                프레임 시간 개선
+                            </h4>
+
+                            <p>
+                                아이템 처리 비용이 16.67ms 예산에 비해 작아
+                                시간 지표에 드러나지 않았습니다.
+                                GC 실행 횟수는 수집하지 않아 GC 스파이크 감소도 주장하지 않습니다.
+                            </p>
+
+                        </article>
+
+                    </div>
+
+                    <p class="ss-pool-note">
+                        측정 한계: Development Build · 기기 1대 · 아이템 1종 · 적재량 5 고정 시나리오 ·
+                        첫 사이클의 생성 비용과 스파이크는 풀링 후에도 유지
+                    </p>
+
+                </div>
+
+            </div>
+        </section>
+
+
+        <!-- =====================================================
              Upgrade / Data
         ====================================================== -->
-        <section class="detail-section detail-section-dark">
+        <section class="detail-section">
             <div class="container">
 
                 <div class="feature-heading">
@@ -469,7 +941,7 @@
         <!-- =====================================================
              Save / Load
         ====================================================== -->
-        <section class="detail-section">
+        <section class="detail-section detail-section-dark">
             <div class="container">
 
                 <div class="feature-heading">
@@ -565,7 +1037,7 @@
         <!-- =====================================================
              UX / Polish
         ====================================================== -->
-        <section class="detail-section detail-section-dark">
+        <section class="detail-section">
             <div class="container">
 
                 <div class="feature-heading">
@@ -679,7 +1151,7 @@
         <!-- =====================================================
              Development
         ====================================================== -->
-        <section class="detail-section">
+        <section class="detail-section detail-section-dark">
             <div class="container">
 
                 <div class="feature-heading">
@@ -749,7 +1221,7 @@
                         </span>
 
                         <strong>
-                            APK Build / Emulator Test
+                            APK Build / Emulator · Galaxy S25+ Test
                         </strong>
 
                     </article>

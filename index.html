@@ -211,16 +211,20 @@
                         </div>
 
                         <div class="tag-list">
-                            <span>Floating Joystick</span>
+                            <span>Object Pooling</span>
+                            <span>Performance Profiling</span>
                             <span>Collect & Stack</span>
-                            <span>Upgrade</span>
+                            <span>Floating Joystick</span>
                             <span>Save / Load</span>
                         </div>
 
                         <dl class="project-meta">
                             <div>
                                 <dt>Period</dt>
-                                <dd>2026.08.25 — 09.03</dd>
+                                <dd>
+                                    2026.08.25 — 09.03
+                                    <span class="project-meta-note">Optimization · 2026.10</span>
+                                </dd>
                             </div>
 
                             <div>
@@ -230,7 +234,7 @@
 
                             <div>
                                 <dt>Test</dt>
-                                <dd>APK / Emulator</dd>
+                                <dd>APK / Emulator / Galaxy&nbsp;S25+</dd>
                             </div>
                         </dl>
 
@@ -250,6 +254,47 @@
                     </div>
 
                 </article>
+
+            </div>
+        </section>
+
+
+        <!-- Technical Experience -->
+        <section id="experience" class="section experience-section">
+            <div class="container">
+
+                <div class="section-heading">
+                    <p class="eyebrow">TECHNICAL EXPERIENCE</p>
+                    <h2>직무 관련 기술 경험</h2>
+                </div>
+
+                <div class="experience-grid">
+
+                    <a href="projects/technical-experience.html#network"
+                       class="info-card experience-card">
+                        <span class="card-number">NETWORK · C++ / WinSock / TCP</span>
+                        <h3>C++ 네트워크 게임 프로그래밍</h3>
+                        <p>
+                            싱글플레이 게임 20 Minutes Till Dawn을 서버·클라이언트
+                            기반 멀티플레이 구조로 전환한 3인 팀 프로토타입에서
+                            NetworkThread, 패킷 구조와 객체 동기화를 담당했습니다.
+                        </p>
+                        <span class="experience-link">자세히 보기 →</span>
+                    </a>
+
+                    <a href="projects/technical-experience.html#graphics"
+                       class="info-card experience-card">
+                        <span class="card-number">GRAPHICS · OpenGL 3.3 / GLSL / DirectX 12</span>
+                        <h3>게임 그래픽스 및 셰이더</h3>
+                        <p>
+                            OpenGL 기반 파티클 렌더링과 HDR FBO·Ping-Pong Blur를
+                            이용한 Bloom 후처리를 구현했고, DirectX 12 기반
+                            탱크 전투 게임을 제작하며 렌더링 파이프라인을 학습했습니다.
+                        </p>
+                        <span class="experience-link">자세히 보기 →</span>
+                    </a>
+
+                </div>
 
             </div>
         </section>
@@ -338,45 +383,29 @@
                         </span>
                     </a>
 
-                </div>
 
-            </div>
-        </section>
-
-
-        <!-- Technical Experience -->
-        <section id="experience" class="section experience-section">
-            <div class="container">
-
-                <div class="section-heading">
-                    <p class="eyebrow">TECHNICAL EXPERIENCE</p>
-                    <h2>직무 관련 기술 경험</h2>
-                </div>
-
-                <div class="experience-grid">
-
-                    <a href="projects/technical-experience.html#network"
-                       class="info-card experience-card">
-                        <span class="card-number">NETWORK · C++ / WinSock / TCP</span>
-                        <h3>C++ 네트워크 게임 프로그래밍</h3>
-                        <p>
-                            싱글플레이 게임 20 Minutes Till Dawn을 서버·클라이언트
-                            기반 멀티플레이 구조로 전환한 3인 팀 프로토타입에서
-                            NetworkThread, 패킷 구조와 객체 동기화를 담당했습니다.
+                    <a href="projects/stack-sell.html#object-pooling"
+                       class="problem-card problem-card-link">
+                        <p class="problem-category">
+                            OPTIMIZATION · UNITY / C#
                         </p>
-                        <span class="experience-link">자세히 보기 →</span>
-                    </a>
 
-                    <a href="projects/technical-experience.html#graphics"
-                       class="info-card experience-card">
-                        <span class="card-number">GRAPHICS · OpenGL 3.3 / GLSL / DirectX 12</span>
-                        <h3>게임 그래픽스 및 셰이더</h3>
+                        <h3>
+                            반복적인 아이템
+                            생성·파괴 비용 개선
+                        </h3>
+
                         <p>
-                            OpenGL 기반 파티클 렌더링과 HDR FBO·Ping-Pong Blur를
-                            이용한 Bloom 후처리를 구현했고, DirectX 12 기반
-                            탱크 전투 게임을 제작하며 렌더링 파이프라인을 학습했습니다.
+                            아이템 수집·판매 루프에서 반복되던 Instantiate/Destroy를
+                            ObjectPool 기반 재사용 구조로 변경했습니다.
+                            자동화 벤치마크와 Android 실기기 측정으로 검증해,
+                            반복 사이클의 관리 힙 할당량 16.2% 감소를 확인했습니다.
                         </p>
-                        <span class="experience-link">자세히 보기 →</span>
+
+                        <span class="problem-project">
+                            STACK & SELL
+                            <span class="problem-link">View details →</span>
+                        </span>
                     </a>
 
                 </div>

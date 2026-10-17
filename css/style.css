@@ -498,6 +498,15 @@ button {
     }
 
 
+.project-meta-note {
+    display: block;
+    margin-top: 2px;
+    color: var(--text-dim);
+    font-size: 0.72rem;
+    font-weight: 600;
+}
+
+
 .project-actions {
     display: flex;
     align-items: center;
@@ -616,13 +625,13 @@ button {
 
 .problem-grid {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(2, 1fr);
     gap: 16px;
 }
 
 
 .problem-card {
-    min-height: 395px;
+    min-height: 340px;
     padding: 31px;
     display: flex;
     flex-direction: column;
@@ -1994,6 +2003,484 @@ button {
 
 
 /* =========================================================
+   SS Period Note
+========================================================= */
+
+.ss-period-note {
+    display: block;
+    margin-top: 4px;
+    color: var(--text-dim);
+    font-size: 0.75rem;
+    font-weight: 600;
+}
+
+
+/* =========================================================
+   SS Object Pooling
+========================================================= */
+
+.ss-pool-summary {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin: 26px 0 0;
+    padding: 0;
+    list-style: none;
+}
+
+
+    .ss-pool-summary li {
+        padding: 7px 12px;
+        border: 1px solid var(--line);
+        border-radius: 999px;
+        background: var(--card);
+        color: var(--text-soft);
+        font-size: 0.78rem;
+        font-weight: 700;
+    }
+
+
+        .ss-pool-summary li:nth-child(2),
+        .ss-pool-summary li:nth-child(3) {
+            border-color: rgba(127, 168, 255, 0.35);
+            background: var(--accent-soft);
+            color: var(--accent);
+        }
+
+
+.ss-pool-block + .ss-pool-block {
+    margin-top: 80px;
+}
+
+
+    .ss-pool-block > h3 {
+        margin: 14px 0 26px;
+        font-size: clamp(1.3rem, 2.2vw, 1.75rem);
+        line-height: 1.35;
+        letter-spacing: -0.03em;
+    }
+
+
+    .ss-pool-block code {
+        padding: 1px 5px;
+        border-radius: 5px;
+        background: rgba(255, 255, 255, 0.05);
+        color: #d4d9de;
+        font-family: Consolas, "D2Coding", "SFMono-Regular", Menlo, monospace;
+        font-size: 0.86em;
+        overflow-wrap: anywhere;
+    }
+
+
+.ss-pool-text {
+    max-width: 760px;
+    margin: -8px 0 26px;
+    color: var(--text-soft);
+    font-size: 0.9rem;
+}
+
+
+.ss-pool-note {
+    margin: 18px 0 0;
+    color: var(--text-dim);
+    font-size: 0.78rem;
+}
+
+
+/* A. Structure */
+
+.ss-pool-compare {
+    display: grid;
+    gap: 12px;
+}
+
+
+.ss-pool-row {
+    display: grid;
+    grid-template-columns: 90px minmax(0, 1fr);
+    gap: 14px 20px;
+    align-items: center;
+    padding: 24px;
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    background: var(--card);
+}
+
+
+    .ss-pool-row > p {
+        grid-column: 2;
+        margin: 0;
+        color: var(--text-soft);
+        font-size: 0.84rem;
+    }
+
+
+        .ss-pool-row > p strong {
+            color: var(--accent);
+        }
+
+
+.ss-pool-row-label {
+    color: var(--text-dim);
+    font-size: 0.72rem;
+    font-weight: 800;
+    letter-spacing: 0.1em;
+}
+
+
+.ss-pool-row-after .ss-pool-row-label {
+    color: var(--accent);
+}
+
+
+.ss-pool-flow {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px 30px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+
+    .ss-pool-flow li {
+        position: relative;
+        padding: 9px 14px;
+        border: 1px solid var(--line);
+        border-radius: 10px;
+        background: var(--bg-soft);
+        color: #dce1e6;
+        font-family: Consolas, "D2Coding", "SFMono-Regular", Menlo, monospace;
+        font-size: 0.82rem;
+        font-weight: 700;
+    }
+
+
+        .ss-pool-flow li + li::before {
+            content: "→";
+            position: absolute;
+            top: 50%;
+            left: -22px;
+            transform: translateY(-50%);
+            color: var(--text-dim);
+            font-weight: 400;
+        }
+
+
+        .ss-pool-flow li.is-changed {
+            color: var(--text-soft);
+            border-style: dashed;
+        }
+
+
+.ss-pool-row-after .ss-pool-flow li.is-changed {
+    border-style: solid;
+    border-color: rgba(127, 168, 255, 0.45);
+    background: var(--accent-soft);
+    color: var(--accent);
+}
+
+
+/* B. Design Decisions */
+
+.ss-pool-decision-grid,
+.ss-pool-result-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 14px;
+}
+
+
+    .ss-pool-decision-grid article,
+    .ss-pool-result-grid article {
+        display: flex;
+        flex-direction: column;
+        padding: 28px;
+        border: 1px solid var(--line);
+        border-radius: 16px;
+        background: var(--bg-soft);
+    }
+
+
+    .ss-pool-decision-grid span {
+        color: var(--accent);
+        font-size: 0.68rem;
+        font-weight: 800;
+        letter-spacing: 0.08em;
+    }
+
+
+    .ss-pool-decision-grid h4,
+    .ss-pool-result-grid h4 {
+        margin: 34px 0 14px;
+        font-size: 1.12rem;
+        line-height: 1.4;
+    }
+
+
+    .ss-pool-decision-grid p,
+    .ss-pool-result-grid p {
+        margin: 0;
+        color: var(--text-soft);
+        font-size: 0.84rem;
+    }
+
+
+        .ss-pool-decision-grid p + p {
+            margin-top: 12px;
+        }
+
+
+    .ss-pool-decision-grid .ss-pool-note {
+        margin-top: auto;
+        padding-top: 18px;
+        border-top: 1px solid var(--line);
+        color: var(--text-dim);
+        font-size: 0.76rem;
+    }
+
+
+        .ss-pool-decision-grid p:not(.ss-pool-note) + .ss-pool-note {
+            margin-top: 22px;
+        }
+
+
+/* C. Benchmark */
+
+.ss-pool-spec-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+}
+
+
+    .ss-pool-spec-grid > div {
+        padding: 22px;
+        border: 1px solid var(--line);
+        border-radius: 14px;
+        background: var(--card);
+    }
+
+
+    .ss-pool-spec-grid span {
+        display: block;
+        color: var(--text-dim);
+        font-size: 0.68rem;
+        font-weight: 800;
+        letter-spacing: 0.08em;
+    }
+
+
+    .ss-pool-spec-grid strong {
+        display: block;
+        margin-top: 26px;
+        font-size: 0.98rem;
+    }
+
+
+    .ss-pool-spec-grid p {
+        margin: 5px 0 0;
+        color: var(--text-soft);
+        font-size: 0.78rem;
+    }
+
+
+/* D. Device Result */
+
+.ss-pool-env {
+    display: grid;
+    grid-template-columns: repeat(5, auto);
+    justify-content: space-between;
+    gap: 16px 24px;
+    margin: 0 0 22px;
+    padding: 18px 0;
+    border-top: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+}
+
+
+    .ss-pool-env dt {
+        margin-bottom: 4px;
+        color: var(--text-dim);
+        font-size: 0.7rem;
+    }
+
+
+    .ss-pool-env dd {
+        margin: 0;
+        color: #dce1e6;
+        font-size: 0.85rem;
+        font-weight: 600;
+    }
+
+
+.ss-pool-metric-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 14px;
+}
+
+
+    .ss-pool-metric-grid article {
+        display: flex;
+        flex-direction: column;
+        padding: 26px;
+        border: 1px solid var(--line);
+        border-radius: 16px;
+        background: var(--card);
+    }
+
+
+        .ss-pool-metric-grid article > span {
+            color: var(--text-dim);
+            font-size: 0.68rem;
+            font-weight: 800;
+            letter-spacing: 0.08em;
+        }
+
+
+        .ss-pool-metric-grid article > p {
+            margin: auto 0 0;
+            padding-top: 18px;
+            color: var(--text-soft);
+            font-size: 0.78rem;
+        }
+
+
+            .ss-pool-metric-grid article > p strong {
+                color: var(--text);
+            }
+
+
+.ss-pool-delta {
+    display: block;
+    margin: 18px 0 22px;
+    color: var(--accent);
+    font-size: clamp(2rem, 3vw, 2.5rem);
+    line-height: 1.1;
+    letter-spacing: -0.03em;
+}
+
+
+.ss-pool-metric-grid article.is-neutral .ss-pool-delta {
+    color: var(--text-soft);
+}
+
+
+.ss-pool-bars {
+    display: grid;
+    gap: 10px;
+}
+
+
+.ss-pool-bar {
+    display: grid;
+    grid-template-columns: 52px minmax(0, 1fr) auto;
+    gap: 10px;
+    align-items: center;
+}
+
+
+    .ss-pool-bar span {
+        color: var(--text-dim);
+        font-size: 0.74rem;
+        font-weight: 700;
+    }
+
+
+    .ss-pool-bar i {
+        position: relative;
+        height: 10px;
+        border-radius: 999px;
+        background: rgba(255, 255, 255, 0.04);
+    }
+
+
+        .ss-pool-bar i::after {
+            content: "";
+            position: absolute;
+            inset: 0 auto 0 0;
+            width: var(--w);
+            border-radius: inherit;
+            background: var(--text-dim);
+        }
+
+
+    .ss-pool-bar b {
+        min-width: 66px;
+        color: #dce1e6;
+        font-size: 0.8rem;
+        text-align: right;
+    }
+
+
+    .ss-pool-bar.is-after span,
+    .ss-pool-bar.is-after b {
+        color: var(--accent);
+    }
+
+
+    .ss-pool-bar.is-after i::after {
+        background: var(--accent);
+    }
+
+
+.ss-pool-time {
+    display: grid;
+    gap: 10px;
+    margin: 0;
+}
+
+
+    .ss-pool-time div {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        gap: 4px 10px;
+    }
+
+
+    .ss-pool-time dt {
+        color: var(--text-dim);
+        font-size: 0.76rem;
+    }
+
+
+    .ss-pool-time dd {
+        margin: 0;
+        color: #dce1e6;
+        font-size: 0.8rem;
+        font-weight: 700;
+    }
+
+
+/* E. Interpretation */
+
+.ss-pool-result-grid span {
+    align-self: flex-start;
+    padding: 4px 10px;
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    color: var(--text-dim);
+    font-size: 0.7rem;
+    font-weight: 800;
+}
+
+
+    .ss-pool-result-grid span.is-confirmed {
+        border-color: rgba(127, 168, 255, 0.35);
+        background: var(--accent-soft);
+        color: var(--accent);
+    }
+
+
+.ss-pool-result-grid h4 {
+    margin-top: 26px;
+}
+
+
+/* =========================================================
    SS Responsive
 ========================================================= */
 
@@ -2012,6 +2499,28 @@ button {
     .ss-save-grid,
     .ss-polish-grid {
         grid-template-columns: repeat(2, 1fr);
+    }
+
+
+    .ss-pool-decision-grid {
+        grid-template-columns: 1fr;
+    }
+
+
+        .ss-pool-decision-grid h4 {
+            margin-top: 20px;
+        }
+
+
+    .ss-pool-spec-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+
+    .ss-pool-env {
+        grid-template-columns: repeat(3, auto);
+        justify-content: start;
+        column-gap: 40px;
     }
 }
 
@@ -2033,6 +2542,22 @@ button {
     .ss-development-grid {
         grid-template-columns: repeat(2, 1fr);
     }
+
+
+    .ss-pool-metric-grid,
+    .ss-pool-result-grid {
+        grid-template-columns: 1fr;
+    }
+
+
+    .ss-pool-row {
+        grid-template-columns: 1fr;
+    }
+
+
+        .ss-pool-row > p {
+            grid-column: 1;
+        }
 }
 
 
@@ -2047,6 +2572,55 @@ button {
     .ss-polish-grid,
     .ss-development-grid {
         grid-template-columns: 1fr;
+    }
+
+
+    .ss-pool-block + .ss-pool-block {
+        margin-top: 60px;
+    }
+
+
+    .ss-pool-row,
+    .ss-pool-decision-grid article,
+    .ss-pool-result-grid article,
+    .ss-pool-metric-grid article {
+        padding: 22px;
+    }
+
+
+    .ss-pool-flow {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 0;
+    }
+
+
+        .ss-pool-flow li + li {
+            margin-top: 26px;
+        }
+
+
+            .ss-pool-flow li + li::before {
+                content: "↓";
+                top: -25px;
+                left: 50%;
+                transform: translateX(-50%);
+            }
+
+
+        .ss-pool-flow li {
+            text-align: center;
+        }
+
+
+    .ss-pool-spec-grid {
+        grid-template-columns: 1fr;
+    }
+
+
+    .ss-pool-env {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        column-gap: 20px;
     }
 }
 
