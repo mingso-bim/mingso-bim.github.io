@@ -442,7 +442,7 @@ Unity Profiler로 기록한 약 2,000프레임 구간을 Profile Analyzer로 불
 
 ---
 
-## 포트폴리오 요약 (3~5문장)
+## 요약
 
 Stack & Sell의 아이템 수집·판매 루프에서 반복되던 Instantiate/Destroy를 `UnityEngine.Pool.ObjectPool<T>` 기반의 생산 존별 풀로 교체하고, 객체 재사용 시 생길 수 있는 이동 코루틴 충돌을 설계 단계에서 검토해 코루틴 핸들 관리로 예방했습니다.
 효과를 검증하기 위해 실제 게임 로직을 그대로 사용하는 자동화 벤치마크(10사이클 × 5회, First/Repeat 분리)를 Claude Code와 함께 설계·구현했습니다.
